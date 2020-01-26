@@ -1,10 +1,10 @@
- #!/bin/sh
- set -e
- 
- REMOTE="https://github.com/LazyMechanic/configs.git"
- LOCAL="~/configs"
- DOTFILES_DIR="$LOCAL/dotfiles"
- CUSTOM_THEME_DIR="$DOTFILES_DIR/lazymechanic"
+#!/bin/sh
+set -e
+
+REMOTE="https://github.com/LazyMechanic/configs.git"
+LOCAL="$HOME/lazymechanic.configs"
+DOTFILES_DIR="$LOCAL/dotfiles"
+CUSTOM_THEME_DIR="$DOTFILES_DIR/lazymechanic"
  
 function command_exists() {
 	command -v "$@" >/dev/null 2>&1
@@ -40,7 +40,15 @@ function clone_project() {
 		exit 1
     fi
     
-    git clone "$REMOTE" "$LOCAL" || {
+    if [[ -d "$LOCAL" ]];
+    then
+        rm -rf "$LOCAL"
+    fi
+    
+    git clone \
+        -c core.eol=lf \
+        -c core.autocrlf=false \
+        "$REMOTE" "$LOCAL" || {
 		error "git clone of '$REMOTE' repo failed"
 		exit 1
     }
@@ -48,20 +56,28 @@ function clone_project() {
 
 
 function setup_dotfiles() {
-    dotfiles=( $(ls -a "$DOTFILES_DIR" | grep "\.[a-zA-Z0-9]+") )
+    echo "Start setup dotfiles..."
     
-    for f in $remote_dotfiles
+    dotfiles=$(ls -a "$DOTFILES_DIR" | grep "\.[a-zA-Z0-9]")
+    echo "File list which will be installed:"
+    echo "$dotfiles"
+    
+    for f in $dotfiles
     do
-        if [[ -f "~/$f" ]];
+        if [[ -f "$HOME/$f" ]];
         then
-            mv "~/$f" "~/$f.backup"
+            mv "$HOME/$f" "$HOME/$f.backup"
         fi
-        
-        cp "$DOTFILES_DIR/$f" ~/
+       
+        cp "$DOTFILES_DIR/$f" "$HOME/$f"
     done
+    
+    echo "Done!"
 }
 
 function setup_custom_theme() {
+    echo "Start setup zsh custom theme..."
+    
     if [[ -n "$ZSH_CUSTOM" ]];
     then
         cp "$CUSTOM_THEME_DIR" "$ZSH_CUSTOM/themes/"
@@ -69,26 +85,39 @@ function setup_custom_theme() {
         error "oh-my-zsh custom themes directory not found"
         return
     fi
+    
+    echo "Done!"
 }
 
 function init_shell() {
-    zsh="which zsh"
-    if ! command_exists "$zsh";
+    echo "Init zsh..."
+    
+    if [[ -z "$ZSH_VERSION" ]];
     then
-        error "zsh is not installed"
-        return
+        local _zsh="$(which zsh)"
+        if ! command_exists "$_zsh";
+        then
+            error "zsh is not installed"
+            exit 1
+        fi
+        
+        $_zsh -l
     fi
     
-    $zsh -l
+    echo "Done!"
     source ~/.zshrc
 }
 
 function main() {
+    echo "Dotfiles directory:         $DOTFILES_DIR"
+    echo "Zsh custom theme directory: $CUSTOM_THEME_DIR"
+    echo ""
+    
     clone_project
     setup_color
     setup_dotfiles
-    setup_custom_theme
     init_shell
+    setup_custom_theme
 }
 
 main
