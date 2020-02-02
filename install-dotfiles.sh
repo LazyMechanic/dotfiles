@@ -4,40 +4,94 @@ set -e
 REMOTE="https://github.com/LazyMechanic/configs.git"
 LOCAL="$HOME/lazymechanic.configs"
 DOTFILES_DIR="$LOCAL/dotfiles"
+FONTS_DIR="$LOCAL/fonts"
 CUSTOM_THEME_DIR="$DOTFILES_DIR/lazymechanic"
+DEFAULT_THEME="robbyrussell"
+THEME="$DEFAULT_THEME"
+ 
+function yes_no() {
+    if [[ $# -eq 0 ]];
+    then
+        error "invalid argument for prompt, \$# is 0"
+        exit 1
+    fi
+    
+    text="$1"
+    answer_prompt=""
+    default_answer=""
+    
+    if [[ -n $2 ]]
+    then
+        case $2 in
+            [Yy]* ) 
+                answer_prompt="[Y/n]"
+                default_answer="y"
+                ;;
+            [Nn]* ) 
+                answer_prompt="[y/N]"
+                default_answer="n"
+                ;;
+            * ) 
+                error "invalid argument for prompt, \$2 must be [Y,y,N,n]"
+                exit 1
+                ;;
+        esac
+    fi
+    
+    while true; do
+        read -p "$text $answer_prompt " yn
+        case $yn in
+            [Yy]* ) 
+                echo "y"
+                return
+                ;;
+            [Nn]* ) 
+                echo "n"
+                return
+                ;;
+            * )
+                if [[ -z $yn ]];
+                then
+                    echo "$default_answer"
+                    return
+                fi
+                ;;
+        esac
+    done
+}
  
 function command_exists() {
-	command -v "$@" >/dev/null 2>&1
+    command -v "$@" >/dev/null 2>&1
 }
 
 function error() {
-	echo ${RED}"Error: $@"${RESET} >&2
+    echo ${RED}"ERROR: $@"${RESET} >&2
 }
 
 function setup_color() {
-	# Only use colors if connected to a terminal
-	if [ -t 1 ]; then
-		RED=$(printf '\033[31m')
-		GREEN=$(printf '\033[32m')
-		YELLOW=$(printf '\033[33m')
-		BLUE=$(printf '\033[34m')
-		BOLD=$(printf '\033[1m')
-		RESET=$(printf '\033[m')
-	else
-		RED=""
-		GREEN=""
-		YELLOW=""
-		BLUE=""
-		BOLD=""
+    # Only use colors if connected to a terminal
+    if [ -t 1 ]; then
+        RED=$(printf '\033[31m')
+        GREEN=$(printf '\033[32m')
+        YELLOW=$(printf '\033[33m')
+        BLUE=$(printf '\033[34m')
+        BOLD=$(printf '\033[1m')
+        RESET=$(printf '\033[m')
+    else
+        RED=""
+        GREEN=""
+        YELLOW=""
+        BLUE=""
+        BOLD=""
         RESET=""
-	fi
+    fi
 }
 
 function clone_project() {
     if ! command_exists git;
     then
         error "git is not installed"
-		exit 1
+        exit 1
     fi
     
     if [[ -d "$LOCAL" ]];
@@ -49,8 +103,8 @@ function clone_project() {
         -c core.eol=lf \
         -c core.autocrlf=false \
         "$REMOTE" "$LOCAL" || {
-		error "git clone of '$REMOTE' repo failed"
-		exit 1
+        error "git clone of '$REMOTE' repo failed"
+        exit 1
     }
 }
 
@@ -75,49 +129,129 @@ function setup_dotfiles() {
     echo "Done!"
 }
 
-function setup_custom_theme() {
-    echo "Start setup zsh custom theme..."
-    
-    if [[ -n "$ZSH_CUSTOM" ]];
+function select_theme() {
+    PS3='Please enter theme: '
+    options=("LazyMechanic" "Powerlevel10k" "Default (robbyrussell)")
+    select opt in "${options[@]}"
+    do
+        case $opt in
+            "LazyMechanic")
+                echo "LazyMechanic"
+                return
+                ;;
+            "Powerlevel10k")
+                echo "Powerlevel10k"
+                return
+                ;;
+            "Default (robbyrussell)")
+                echo "Default"
+                return
+                ;;
+            *) echo "invalid option $REPLY";;
+        esac
+    done
+}
+
+function install_p10k() {
+    p10k_dir="$ZSH_CUSTOM/theme/powerlevel10k"
+    if [[ -d "$p10k_dir" ]];
     then
-        cp "$CUSTOM_THEME_DIR" "$ZSH_CUSTOM/themes/"
-    else
-        error "oh-my-zsh custom themes directory not found"
-        return
+        answer=$(yes_no "Powerlevel10k directory already exists, delete dir and clone repo?" "y")
+        if [ "$answer" == "y" ];
+        then
+            echo "Remove Powerlevel10k directory..."
+            rm -rf "$p10k_dir"
+            echo "Done!"
+        else
+            echo "Do nothing"
+            return
+        fi
     fi
+
+    echo "Clone Powerlevel10k repo..."
+    git clone \
+        --depth=1 \
+        https://github.com/romkatv/powerlevel10k.git $p10k_dir || {
+        error "git clone of 'https://github.com/romkatv/powerlevel10k.git' repo failed, try install manually"
+        exit 1
+    }
+}
+
+function setup_theme() {
+    echo "Start setup zsh theme..."
+    
+    theme=$(select_theme)
+    case $theme in
+        "LazyMechanic")
+            cp -r "$CUSTOM_THEME_DIR" "$ZSH_CUSTOM/themes/"
+            THEME="lazymechanic/lazymechanic"
+            ;;
+        "Powerlevel10k")
+            install_p10k
+            THEME="powerlevel10k/powerlevel10k"
+            ;;
+        "Default")
+            THEME="$DEFAULT_THEME"
+            ;;
+    esac
+    
+    # Change theme in .zshrc
+    if ! command_exists sed;
+    then
+        error "sed is not installed"
+        exit 1
+    fi
+    
+    sed -i -E "s~ZSH_THEME=\"[a-zA-Z0-9\/]*\"~ZSH_THEME=\"$THEME\"~" "$HOME/.zshrc"
     
     echo "Done!"
 }
 
-function init_shell() {
-    echo "Init zsh..."
-    
-    if [[ -z "$ZSH_VERSION" ]];
+function check_oh_my_zsh() {  
+    if [[ -z "$ZSH_CUSTOM" ]];
     then
-        local _zsh="$(which zsh)"
-        if ! command_exists "$_zsh";
-        then
-            error "zsh is not installed"
-            exit 1
-        fi
-        
-        $_zsh -l
+        error "oh-my-zsh custom themes directory not found"
+        exit 1
     fi
+}
+
+function setup_fonts() {
+    echo "Start setup fonts..."
+
+    local_fonts_dir="$HOME/.local/share/fonts"
+    mkdir -p "$local_fonts_dir"
+    
+    fonts=$(ls "$FONTS_DIR")
+    echo "Font files:"
+    echo "$fonts"
+    
+    for f in $fonts
+    do
+        cp "$FONTS_DIR/$f" "$local_fonts_dir/$f"
+    done
     
     echo "Done!"
-    source ~/.zshrc
 }
 
 function main() {
-    echo "Dotfiles directory:         $DOTFILES_DIR"
-    echo "Zsh custom theme directory: $CUSTOM_THEME_DIR"
-    echo ""
+    setup_color
+    
+    # Expect 1 argument
+    if [[ $# != 1 ]];
+    then
+        error "invalid argument, 1st argument must be \$ZSH_CUSTOM"
+        exit 1
+    fi
+    
+    ZSH_CUSTOM="$1"
     
     clone_project
-    setup_color
+    check_oh_my_zsh
     setup_dotfiles
-    init_shell
-    setup_custom_theme
+    setup_theme
+    setup_fonts
+    
+    source ~/.bashrc
 }
 
-main
+main $@

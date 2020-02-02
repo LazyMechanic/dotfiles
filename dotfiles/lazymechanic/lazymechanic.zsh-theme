@@ -1,8 +1,8 @@
 # AVIT ZSH Theme
 
 PROMPT='
-$(_user_host):$(_current_dir) $(git_prompt_info) $(_ruby_version)
-%{$fg[$CARETCOLOR]%}$(_caretsymbol)%{$resetcolor%} '
+$(_user_host):$(_current_dir) $(git_prompt_info)
+%{$fg[$CARETCOLOR]%}$(_caret_symbol)%{$resetcolor%} '
 
 PROMPT2='%{$fg[$CARETCOLOR]%}◀%{$reset_color%} '
 
@@ -12,7 +12,7 @@ RPROMPT='$(_vi_status)%{$(echotc UP 1)%}$(_git_time_since_commit) $(git_prompt_s
 local _return_status="%{$fg_bold[red]%}%(?..⍉)%{$reset_color%}"
 local _hist_no="%{$fg[grey]%}%h%{$reset_color%}"
 
-function _caretsymbol() {
+function _caret_symbol() {
   echo "❯"
 }
 
@@ -39,14 +39,6 @@ function _user_host() {
 function _vi_status() {
   if {echo $fpath | grep -q "plugins/vi-mode"}; then
     echo "$(vi_mode_prompt_info)"
-  fi
-}
-
-function _ruby_version() {
-  if {echo $fpath | grep -q "plugins/rvm"}; then
-    echo "%{$fg[grey]%}$(rvm_prompt_info)%{$reset_color%}"
-  elif {echo $fpath | grep -q "plugins/rbenv"}; then
-    echo "%{$fg[grey]%}$(rbenv_prompt_info)%{$reset_color%}"
   fi
 }
 
