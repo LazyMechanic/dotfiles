@@ -1,4 +1,4 @@
- ### How to install 
+ ## How to install 
  **via curl**
  ```bash
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/LazyMechanic/configs/master/install-dotfiles.sh) "$ZSH_CUSTOM""
@@ -8,3 +8,11 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/LazyMechanic/configs/maste
 ```bash
 sh -c "$(wget -O- https://raw.githubusercontent.com/LazyMechanic/configs/master/install-dotfiles.sh) "$ZSH_CUSTOM"" 
 ```
+
+## Themes
+### LazyMechanic
+![LazyMechanic](./lazymechanic.png)
+### Powerlevel10k
+![Powerlevel10k](./p10k.png)
+### Default
+![Default](./default.png)
