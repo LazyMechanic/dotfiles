@@ -246,6 +246,20 @@ function install_fonts() {
     fi
 }
 
+function remove_project() {
+    echo "Start remove project..."
+    
+    answer=$(yes_no "Remove cloning project?" "y")
+    if [ "$answer" == "y" ];
+    then
+        rm -rf "$LOCAL"
+        echo "Done!"
+    else
+        echo "Do nothing"
+        return
+    fi
+}
+
 function main() {
     setup_color
     
@@ -263,6 +277,7 @@ function main() {
     setup_dotfiles
     setup_theme
     install_fonts
+    remove_project
     
     source ~/.bashrc
 }
