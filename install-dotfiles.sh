@@ -113,8 +113,11 @@ function setup_dotfiles() {
     echo "Start setup dotfiles..."
     
     dotfiles=$(ls -a "$DOTFILES_DIR" | grep "\.[a-zA-Z0-9]")
-    echo "File list which will be installed:"
-    echo "$dotfiles"
+    echo "Dotfiles to be installed:"
+    for f in $dotfiles
+    do
+        echo " - $f"
+    done
     
     for f in $dotfiles
     do
@@ -215,22 +218,32 @@ function check_oh_my_zsh() {
     fi
 }
 
-function setup_fonts() {
-    echo "Start setup fonts..."
-
-    local_fonts_dir="$HOME/.local/share/fonts"
-    mkdir -p "$local_fonts_dir"
+function install_fonts() {
+    echo "Start install fonts..."
     
-    fonts=$(ls "$FONTS_DIR")
-    echo "Font files:"
-    echo "$fonts"
-    
-    for f in $fonts
-    do
-        cp "$FONTS_DIR/$f" "$local_fonts_dir/$f"
-    done
-    
-    echo "Done!"
+    # Check if need setup custom fonts
+    answer=$(yes_no "Install custom fonts?" "y")
+    if [ "$answer" == "y" ];
+    then
+        local_fonts_dir="$HOME/.local/share/fonts"
+        mkdir -p "$local_fonts_dir"
+        
+        fonts=$(ls "$FONTS_DIR")
+        echo "Font files to be installed:"
+        for f in $fonts
+        do
+            echo " - $f"
+        done
+        
+        for f in $fonts
+        do
+            cp "$FONTS_DIR/$f" "$local_fonts_dir/$f"
+        done
+        echo "Done!"
+    else
+        echo "Do nothing"
+        return
+    fi
 }
 
 function main() {
@@ -249,7 +262,7 @@ function main() {
     check_oh_my_zsh
     setup_dotfiles
     setup_theme
-    setup_fonts
+    install_fonts
     
     source ~/.bashrc
 }
