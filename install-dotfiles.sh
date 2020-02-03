@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 set -e
 
 REMOTE="https://github.com/LazyMechanic/configs.git"
@@ -9,7 +9,7 @@ CUSTOM_THEME_DIR="$DOTFILES_DIR/lazymechanic"
 DEFAULT_THEME="robbyrussell"
 THEME="$DEFAULT_THEME"
  
-function yes_no() {
+yes_no() {
     if [[ $# -eq 0 ]];
     then
         error "invalid argument for prompt, \$# is 0"
@@ -60,15 +60,15 @@ function yes_no() {
     done
 }
  
-function command_exists() {
+command_exists() {
     command -v "$@" >/dev/null 2>&1
 }
 
-function error() {
+error() {
     echo ${RED}"ERROR: $@"${RESET} >&2
 }
 
-function setup_color() {
+setup_color() {
     # Only use colors if connected to a terminal
     if [ -t 1 ]; then
         RED=$(printf '\033[31m')
@@ -87,7 +87,7 @@ function setup_color() {
     fi
 }
 
-function clone_project() {
+clone_project() {
     if ! command_exists git;
     then
         error "git is not installed"
@@ -109,7 +109,7 @@ function clone_project() {
 }
 
 
-function setup_dotfiles() {
+setup_dotfiles() {
     echo "Start setup dotfiles..."
     
     dotfiles=$(ls -a "$DOTFILES_DIR" | grep "\.[a-zA-Z0-9]")
@@ -132,7 +132,7 @@ function setup_dotfiles() {
     echo "Done!"
 }
 
-function select_theme() {
+select_theme() {
     PS3='Please enter theme: '
     options=("LazyMechanic" "Powerlevel10k" "Default (robbyrussell)")
     select opt in "${options[@]}"
@@ -155,8 +155,8 @@ function select_theme() {
     done
 }
 
-function install_p10k() {
-    p10k_dir="$ZSH_CUSTOM/theme/powerlevel10k"
+install_p10k() {
+    p10k_dir="$ZSH_CUSTOM/themes/powerlevel10k"
     if [[ -d "$p10k_dir" ]];
     then
         answer=$(yes_no "Powerlevel10k directory already exists, delete dir and clone repo?" "y")
@@ -180,7 +180,7 @@ function install_p10k() {
     }
 }
 
-function setup_theme() {
+setup_theme() {
     echo "Start setup zsh theme..."
     
     theme=$(select_theme)
@@ -210,7 +210,7 @@ function setup_theme() {
     echo "Done!"
 }
 
-function check_oh_my_zsh() {  
+check_oh_my_zsh() {  
     if [[ -z "$ZSH_CUSTOM" ]];
     then
         error "oh-my-zsh custom themes directory not found"
@@ -218,7 +218,7 @@ function check_oh_my_zsh() {
     fi
 }
 
-function install_fonts() {
+install_fonts() {
     echo "Start install fonts..."
     
     # Check if need setup custom fonts
@@ -246,7 +246,7 @@ function install_fonts() {
     fi
 }
 
-function remove_project() {
+remove_project() {
     echo "Start remove project..."
     
     answer=$(yes_no "Remove cloning project?" "y")
@@ -260,7 +260,7 @@ function remove_project() {
     fi
 }
 
-function main() {
+main() {
     setup_color
     
     # Expect 1 argument
