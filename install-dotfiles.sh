@@ -134,20 +134,28 @@ setup_dotfiles() {
 
 select_theme() {
     PS3='Please enter theme: '
-    options=("LazyMechanic" "Powerlevel10k" "Default (robbyrussell)")
+    options=("LazyMechanic" "Powerlevel10k (lean)" "Powerlevel10k (classic)" "Powerlevel10k (rainbow)" "Default (robbyrussell)")
     select opt in "${options[@]}"
     do
         case $opt in
             "LazyMechanic")
-                echo "LazyMechanic"
+                echo "lazymechanic"
                 return
                 ;;
-            "Powerlevel10k")
-                echo "Powerlevel10k"
+            "Powerlevel10k (lean)")
+                echo "p10k_lean"
+                return
+                ;;
+            "Powerlevel10k (classic)")
+                echo "p10k_classic"
+                return
+                ;;
+            "Powerlevel10k (rainbow)")
+                echo "p10k_rainbow"
                 return
                 ;;
             "Default (robbyrussell)")
-                echo "Default"
+                echo "default"
                 return
                 ;;
             *) echo "invalid option $REPLY";;
@@ -180,18 +188,41 @@ install_p10k() {
     }
 }
 
+copy_p10k_config() {
+    if [[ -z $1 ]];
+    then
+        error "invalid argument for copy_p10k_config()"
+        exit 1
+    fi
+    
+    f=$1
+    
+    cp "$HOME/$f" "$HOME/.p10k.zsh"
+}
+
 setup_theme() {
     echo "Start setup zsh theme..."
     
     theme=$(select_theme)
     case $theme in
-        "LazyMechanic")
+        "lazymechanic")
             cp -r "$CUSTOM_THEME_DIR" "$ZSH_CUSTOM/themes/"
             THEME="lazymechanic/lazymechanic"
             ;;
-        "Powerlevel10k")
+        "p10k_lean")
             install_p10k
             THEME="powerlevel10k/powerlevel10k"
+            copy_p10k_config ".p10k.zsh.lean"
+            ;;
+        "p10k_classic")
+            install_p10k
+            THEME="powerlevel10k/powerlevel10k"
+            copy_p10k_config ".p10k.zsh.classic"
+            ;;
+        "p10k_rainbow")
+            install_p10k
+            THEME="powerlevel10k/powerlevel10k"
+            copy_p10k_config ".p10k.zsh.rainbow"
             ;;
         "Default")
             THEME="$DEFAULT_THEME"

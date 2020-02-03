@@ -12,7 +12,11 @@ bash -c "$(wget -O- https://raw.githubusercontent.com/LazyMechanic/configs/maste
 ## Themes
 ### LazyMechanic
 ![LazyMechanic](./lazymechanic.png)
-### Powerlevel10k
-![Powerlevel10k](./p10k.png)
+### Powerlevel10k (lean)
+![Powerlevel10k_lean](./p10k.lean.png)
+### Powerlevel10k (classic)
+![Powerlevel10k_classic](./p10k.classic.png)
+### Powerlevel10k (rainbow)
+![Powerlevel10k_rainbow](./p10k.rainbow.png)
 ### Default
 ![Default](./default.png)
