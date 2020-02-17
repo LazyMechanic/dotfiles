@@ -1,15 +1,28 @@
- ## How to install 
+## Dependencies
+- Zsh
+    - zsh
+    - [Oh-my-zsh](https://github.com/ohmyzsh/ohmyzsh)
+    - Font MesloLGS NF (include with repo)
+- i3
+    - Font Noto Sans
+    - feh
+    - dunst
+    - compton
+    - polybar
+    - i3lock
+
+## How to install 
  **via curl**
  ```bash
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/LazyMechanic/configs/master/install-dotfiles.sh) "$ZSH_CUSTOM""
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/LazyMechanic/dotfiles/master/install-dotfiles.sh) ${$ZSH_CUSTOM:-~/.oh-my-zsh/custom}"
  ```
 
 **via wget**
 ```bash
-bash -c "$(wget -O- https://raw.githubusercontent.com/LazyMechanic/configs/master/install-dotfiles.sh) "$ZSH_CUSTOM"" 
+bash -c "$(wget -O- https://raw.githubusercontent.com/LazyMechanic/dotfiles/master/install-dotfiles.sh) ${$ZSH_CUSTOM:-~/.oh-my-zsh/custom}" 
 ```
 
-## Themes
+## Zsh themes
 ### LazyMechanic
 ![LazyMechanic](./lazymechanic.png)
 ### Powerlevel10k (lean)

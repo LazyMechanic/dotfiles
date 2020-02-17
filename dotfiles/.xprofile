@@ -1,0 +1,4 @@
+if [[ "$DESKTOP_SESSION"=~"^i3.*$" ]]; then
+    export DESKTOP_SESSION="kde"
+    export XDG_CURRENT_DESKTOP="KDE"
+fi
