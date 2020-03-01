@@ -2,11 +2,6 @@
 # ~/.bashrc
 #
 
-if [[ -z "$ZSH_VERSION" ]];
-then
-	exec /usr/bin/zsh -l
-fi
-
 [[ $- != *i* ]] && return
 
 colors() {

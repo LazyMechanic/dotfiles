@@ -1,0 +1,654 @@
+; ##########################################
+; ################# colors #################
+; ##########################################
+
+[colors]
+
+;#C3CAD2
+light-background = #E5EAF0
+;#272A33
+dark-background = #30343F 
+
+;#C3CAD2
+light-foreground = #E5EAF0
+;#272A33
+dark-foreground = #30343F
+
+spotify = #1db954
+
+date-background = #81a1c1
+date-foreground = ${self.dark-foreground}
+
+pulseaudio-background = #ebcb8b
+pulseaudio-foreground = ${self.dark-foreground}
+
+wlan-background = #b48ead
+wlan-foreground = ${self.dark-foreground}
+
+tray-background = ${self.dark-background}
+tray-foreground = ${self.dark-foreground}
+
+battery-background = #a3be8c
+battery-foreground = ${self.dark-foreground}
+
+xkeyboard-background = #f59335
+xkeyboard-foreground = ${self.dark-foreground}
+
+xwindow-background = #88D0BA
+xwindow-foreground = ${self.dark-foreground}
+
+powermenu-background = ${self.light-background}
+powermenu-foreground = ${self.dark-foreground}
+
+; ##########################################
+; ################# offsets #################
+; ##########################################
+
+[offsets]
+
+mpadding = 2
+mmargin = 0
+
+; ##########################################
+; ############### bar/general ##############
+; ##########################################
+
+[bar/general]
+monitor = ${env:MONITOR}
+width = 100%
+height = 30
+offset-y = 5
+
+bottom = false
+
+;separator = |
+
+background = ${colors.dark-background}
+foreground = ${colors.light-foreground}
+
+overline-size = 2
+overline-color = #bc92f8
+underline-size = 2
+underline-color = #bc92f8
+
+spacing = 0
+padding-right = 0
+module-margin-left = 0
+module-margin-right = 1
+
+; ### FontName : Params ; Offset from top
+font-0 = NotoSansMono:style=Bold:pixelsize=10;2
+font-1 = NotoSansMono:style=Regular:size=8:antialias=false;2
+font-2 = Font Awesome 5 Pro:style=Regular:pixelsize=10;2
+font-3 = Font Awesome 5 Brands:style=Regular:pixelsize=10;2
+
+modules-left = i3 xwindow
+modules-center = spotify previous playpause next
+modules-right = pulseaudio xkeyboard wlan battery date powermenu
+
+enable-ipc = true
+
+cursor-click = pointer
+cursor-scroll = ns-resize
+
+; ##########################################
+; ################## tray ##################
+; ##########################################
+
+; ### Position of the system tray window
+; ### If empty or undefined, tray support will be disabled
+; ### NOTE: A center aligned tray will cover center aligned modules
+; ###
+; ### Available positions:
+; ###   left
+; ###   center
+; ###   right
+; ###   none
+tray-position = right
+
+; ### If true, the bar will not shift its
+; ### contents when the tray changes
+tray-detached = false
+
+; ### Tray icon max size
+tray-maxsize = 16
+
+; ### DEPRECATED! Since 3.3.0 the tray always uses pseudo-transparency
+; ### Enable pseudo transparency
+; ### Will automatically be enabled if a fully transparent
+; ### background color is defined using `tray-background`
+tray-transparent = false
+
+; ### Background color for the tray container 
+; ### ARGB color (e.g. #f00, #ff992a, #ddff1023)
+; ### By default the tray container will use the bar
+; ### background color.
+tray-background = ${colors.tray-background}
+
+; ### Tray offset defined as pixel value (e.g. 35) or percentage (e.g. 50%)
+tray-offset-x = 0
+tray-offset-y = -5
+
+; ### Pad the sides of each tray icon
+tray-padding = ${offsets.mpadding}
+
+; ### Scale factor for tray clients
+tray-scale = 1.0
+
+; ##########################################
+; ################ xwindow #################
+; ##########################################
+
+[module/xwindow]
+type = internal/xwindow
+
+format = <label>
+format-background = ${colors.xwindow-background}
+format-foreground = ${colors.xwindow-foreground}
+format-padding = ${offsets.mpadding}
+
+label = %title:0:30:...%
+label-font = 1
+
+; ##########################################
+; ############### xkeyboard ################
+; ##########################################
+
+[module/xkeyboard]
+type = internal/xkeyboard
+
+format = <label-layout>
+format-spacing = 0
+
+blacklist-0 = num lock
+blacklist-1 = scroll lock
+blacklist-2 = caps lock
+
+label-layout = %layout%
+label-layout-background = ${colors.xkeyboard-background}
+label-layout-foreground = ${colors.xkeyboard-foreground}
+label-layout-padding = ${offsets.mpadding}
+
+; ##########################################
+; ############### battery ##################
+; ##########################################
+
+[module/battery]
+type = internal/battery
+
+; ### This is useful in case the battery never reports 100% charge
+full-at = 99
+
+; ### Use the following command to list batteries and adapters:
+; ### $ ls -1 /sys/class/power_supply/
+adapter = AC
+battery = BAT0
+
+; ### If an inotify event haven't been reported in this many
+; ### seconds, manually poll for new values.
+; ### 
+; ### Needed as a fallback for systems that don't report events
+; ### on sysfs/procfs.
+; ### 
+; ### Disable polling by setting the interval to 0.
+; ### 
+; ### Default: 5
+poll-interval = 5
+
+; ### see "man date" for details on how to format the time string
+; ### NOTE: if you want to use syntax tags here you need to use %%{...}
+; ### Default: %H:%M:%S
+time-format = %H:%M
+
+; ### Available tags:
+; ###   <label-charging> (default)
+; ###   <bar-capacity>
+; ###   <ramp-capacity>
+; ###   <animation-charging>
+format-charging = " <animation-charging> <label-charging>"
+format-charging-background = ${colors.battery-background}
+format-charging-foreground = ${colors.battery-foreground}
+format-charging-padding = ${offsets.mpadding}
+
+; ### Available tags:
+; ###   <label-discharging> (default)
+; ###   <bar-capacity>
+; ###   <ramp-capacity>
+; ###   <animation-discharging>
+format-discharging = "<ramp-capacity> <label-discharging>"
+format-discharging-background = ${colors.battery-background}
+format-discharging-foreground = ${colors.battery-foreground}
+format-discharging-padding = ${offsets.mpadding}
+
+; ### Available tags:
+; ###   <label-full> (default)
+; ###   <bar-capacity>
+; ###   <ramp-capacity>
+format-full = " <label-full>"
+format-full-background = ${colors.battery-background}
+format-full-foreground = ${colors.battery-foreground}
+format-full-padding = ${offsets.mpadding}
+
+; ### Available tokens:
+; ###   %percentage% (default) - is set to 100 if full-at is reached
+; ###   %percentage_raw%
+; ###   %time%
+; ###   %consumption% (shows current charge rate in watts)
+label-charging = "%percentage%%"
+
+; ### Available tokens:
+; ###   %percentage% (default) - is set to 100 if full-at is reached
+; ###   %percentage_raw%
+; ###   %time%
+; ###   %consumption% (shows current discharge rate in watts)
+label-discharging = "%percentage%%"
+
+; ### Available tokens:
+; ###   %percentage% (default) - is set to 100 if full-at is reached
+; ###   %percentage_raw%
+label-full = "%percentage%%"
+
+; ### Only applies if <ramp-capacity> is used
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 = 
+
+; ### Only applies if <bar-capacity> is used
+bar-capacity-width = 10
+
+; ### Only applies if <animation-charging> is used
+animation-charging-0 = 
+animation-charging-1 = 
+animation-charging-2 = 
+animation-charging-3 = 
+animation-charging-4 = 
+; ### Framerate in milliseconds
+animation-charging-framerate = 750
+
+; ### Only applies if <animation-discharging> is used
+animation-discharging-0 = 
+animation-discharging-1 = 
+animation-discharging-2 = 
+animation-discharging-3 = 
+animation-discharging-4 = 
+; ### Framerate in milliseconds
+animation-discharging-framerate = 500
+
+; ##########################################
+; ############## filesystem ################
+; ##########################################
+
+[module/filesystem]
+type = internal/fs
+interval = 25
+
+mount-0 = /
+
+label-mounted = %{F#0a81f5}%mountpoint%%{F#999896}: %free%
+;label-mounted-background = #504945
+label-mounted-foreground = #999896
+label-mounted-underline = #403a37
+label-mounted-overline = #403a37
+label-mounted-padding = ${offsets.mpadding}
+
+label-unmounted = %mountpoint% not mounted
+;label-unmounted-background = #504945
+label-unmounted-foreground = #999896
+label-unmounted-underline = #403a37
+label-unmounted-overline = #403a37
+label-unmounted-padding = ${offsets.mpadding}
+
+; ##########################################
+; ################### i3 ###################
+; ##########################################
+
+[module/i3]
+type = internal/i3
+
+format = <label-state> <label-mode>
+format-spacing = 0
+
+label-focused = %index%
+label-focused-padding = 2
+label-focused-margin = 0
+label-focused-font = 1
+label-focused-background = #bf616a
+label-focused-foreground = ${colors.dark-foreground}
+
+label-unfocused = %index%
+label-unfocused-padding = 2
+label-unfocused-margin = 0
+label-unfocused-font = 1
+
+label-urgent = %index%
+label-urgent-padding = 2
+label-urgent-margin = 0
+label-urgent-font = 1
+
+label-visible = %index%
+label-visible-padding = 2
+label-visible-margin = 1
+label-visible-font = 1
+label-visible-background = #fec7cd
+label-visible-foreground = ${colors.dark-foreground}
+
+; ##########################################
+; ################## wlan ##################
+; ##########################################
+
+[module/wlan]
+type = internal/network
+
+; ### Find interface name by 'ip a'
+interface = wlp0s20f3
+interval = 3.0
+
+label-disconnected = %ifname% disconnected
+
+label-connected = %essid%
+
+format-connected = %{A1:nm-connection-editor:}<ramp-signal> <label-connected>%{A}
+format-connected-background = ${colors.wlan-background}
+format-connected-foreground = ${colors.wlan-foreground}
+format-connected-padding = ${offsets.mpadding}
+
+format-disconnected = <label-disconnected>
+format-disconnected-background = ${colors.wlan-background}
+format-disconnected-foreground = ${colors.wlan-foreground}
+format-disconnected-padding = ${offsets.mpadding}
+
+ramp-signal-0 = 
+ramp-signal-1 = 
+ramp-signal-2 = 
+ramp-signal-3 = 
+ramp-signal-4 = 
+ramp-signal-5 = 
+ramp-signal-font = 2
+
+; ##########################################
+; ################## cpu ###################
+; ##########################################
+
+[module/cpu]
+type = internal/cpu
+interval = 0.5
+
+format = <label> <ramp-coreload>
+;format-background = #504945
+format-foreground = #999896
+format-underline = #403a37
+format-overline = #403a37
+format-padding = ${offsets.mpadding}
+
+label = cpu
+label-font = 1
+
+ramp-coreload-0 = ▁
+ramp-coreload-0-font = 1
+ramp-coreload-0-foreground = #999896
+ramp-coreload-1 = ▂
+ramp-coreload-1-font = 1
+ramp-coreload-1-foreground = #999896
+ramp-coreload-2 = ▃
+ramp-coreload-2-font = 1
+ramp-coreload-2-foreground = #b8bb26
+ramp-coreload-3 = ▄
+ramp-coreload-3-font = 1
+ramp-coreload-3-foreground = #b8bb26
+ramp-coreload-4 = ▅
+ramp-coreload-4-font = 1
+ramp-coreload-4-foreground = #fabd2f
+ramp-coreload-5 = ▆
+ramp-coreload-5-font = 1
+ramp-coreload-5-foreground = #fabd2f
+ramp-coreload-6 = ▇
+ramp-coreload-6-font = 1
+ramp-coreload-6-foreground = #fb4934
+ramp-coreload-7 = █
+ramp-coreload-7-font = 1
+ramp-coreload-7-foreground = #fb4934
+
+; ##########################################
+; ################# memory #################
+; ##########################################
+
+[module/memory]
+type = internal/memory
+
+format = <label> <ramp-used>
+;format-background = #504945
+format-foreground = #999896
+format-underline = #403a37
+format-overline = #403a37
+format-padding = ${offsets.mpadding}
+
+label = mem
+label-font = 1
+
+ramp-used-0 = ▁
+ramp-used-0-font = 1
+ramp-used-0-foreground = #999896
+ramp-used-1 = ▂
+ramp-used-1-font = 1
+ramp-used-1-foreground = #999896
+ramp-used-2 = ▃
+ramp-used-2-font = 1
+ramp-used-2-foreground = #b8bb26
+ramp-used-3 = ▄
+ramp-used-3-font = 1
+ramp-used-3-foreground = #b8bb26
+ramp-used-4 = ▅
+ramp-used-4-font = 1
+ramp-used-4-foreground = #fabd2f
+ramp-used-5 = ▆
+ramp-used-5-font = 1
+ramp-used-5-foreground = #fabd2f
+ramp-used-6 = ▇
+ramp-used-6-font = 1
+ramp-used-6-foreground = #fb4934
+ramp-used-7 = █
+ramp-used-7-font = 1
+ramp-used-7-foreground = #fb4934
+
+; ##########################################
+; ################## date ##################
+; ##########################################
+
+[module/date]
+type = internal/date
+
+; ### Date example: Mon, 01.02.2020 00:00
+date = "%a | %d.%m.%Y | %H:%M%"
+
+format-background = ${colors.date-background}
+format-foreground = ${colors.date-foreground}
+format-padding = ${offsets.mpadding}
+
+; ##########################################
+; ############### pulseaudio ###############
+; ##########################################
+
+[module/pulseaudio]
+type = internal/pulseaudio
+
+; ### Available tags:
+; ###   <label-volume> (default)
+; ###   <ramp-volume>
+; ###   <bar-volume>
+format-volume = <ramp-volume> <label-volume>
+format-volume-background = ${colors.pulseaudio-background}
+format-volume-foreground = ${colors.pulseaudio-foreground}
+format-volume-padding = ${offsets.mpadding}
+
+; ### Available tags:
+; ###   <label-muted> (default)
+; ###   <ramp-volume>
+; ###   <bar-volume>
+format-muted = <label-muted>
+format-muted-background = ${colors.pulseaudio-background}
+format-muted-foreground = ${colors.pulseaudio-foreground}
+format-muted-padding = ${offsets.mpadding}
+
+; ### Available tokens:
+; ###   %percentage% (default)
+; ###   %decibels% (unreleased)
+label-volume = %percentage%%
+
+; ### Available tokens:
+; ###   %percentage% (default)
+; ###   %decibels% (unreleased)
+label-muted =  muted
+
+; ### Only applies if <ramp-volume> is used
+ramp-volume-font = 2
+ramp-volume-0 = 
+ramp-volume-1 = 
+ramp-volume-2 = 
+ramp-volume-3 = 
+
+; ### Right and Middle click (unreleased)
+click-right = pavucontrol &
+; ### click-middle = 
+
+bar-volume-width = 8
+bar-volume-foreground-0 = #719963
+bar-volume-foreground-1 = #719963
+bar-volume-foreground-2 = #719963
+bar-volume-foreground-3 = #719963
+bar-volume-foreground-4 = #fabd2f
+bar-volume-foreground-5 = #fabd2f
+bar-volume-foreground-6 = #fb4934
+bar-volume-gradient = false
+bar-volume-indicator = ""
+bar-volume-indicator-font = 2
+bar-volume-indicater-foreground = #999896
+bar-volume-fill = ─
+bar-volume-fill-font = 2
+bar-volume-empty = ─
+bar-volume-empty-font = 2
+bar-volume-empty-foreground = #1d2021
+
+; ##########################################
+; ############### powermenu ################
+; ##########################################
+
+[module/powermenu]
+type = custom/menu
+
+expand-right = true
+
+format-spacing = 1
+format-background = ${colors.powermenu-background}
+format-foreground = ${colors.powermenu-foreground}
+format-padding = ${offsets.mpadding}
+
+label-open = ""
+label-open-foreground = ${colors.dark-foreground}
+
+label-close = ""
+label-close-foreground = #cc241d
+
+label-separator = |
+label-separator-foreground = ${colors.dark-foreground}
+
+menu-0-0 = ""
+menu-0-0-exec = i3-msg exit
+menu-0-0-foreground = ${colors.dark-foreground}
+menu-0-1 = ""
+menu-0-1-exec = reboot
+menu-0-1-foreground = ${colors.dark-foreground}
+menu-0-2 = ""
+menu-0-2-exec = poweroff
+menu-0-2-foreground = ${colors.dark-foreground}
+
+; ##########################################
+; ################ previous ################
+; ##########################################
+
+[module/previous]
+type = custom/script
+interval = 86400
+format = "%{T3}<label>"
+format-foreground = ${colors.light-foreground}
+format-underline = ${colors.spotify}
+format-padding = ${offsets.mpadding}
+
+; ### Previous song icon
+exec = echo -e ""
+
+exec-if = "pgrep spotify"
+;line-size = 1
+click-left = playerctl -p spotify previous
+
+; ##########################################
+; ################## next ##################
+; ##########################################
+
+[module/next]
+type = custom/script
+interval = 86400
+format = "%{T3}<label>"
+format-foreground = ${colors.light-foreground}
+format-underline = ${colors.spotify}
+format-padding = ${offsets.mpadding}
+
+; ### Next song icon
+exec = echo -e ""
+
+exec-if = "pgrep spotify"
+;line-size = 1
+click-left = playerctl -p spotify next
+
+; ##########################################
+; ############### playpause ################
+; ##########################################
+
+[module/playpause]
+type = custom/ipc
+format-foreground = ${colors.light-foreground}
+format-underline = ${colors.spotify}
+format-padding = ${offsets.mpadding}
+
+; ### Default (no symbol)
+hook-0 = echo ""
+; ### Playing (play symbol)
+hook-1 = echo -e ""
+; ### Paused (pause symbol)
+hook-2 = echo -e ""
+
+initial = 1
+;line-size = 1
+click-left = playerctl -p spotify play-pause
+
+; ##########################################
+; ################# spotify ################
+; ##########################################
+
+[module/spotify]
+type = custom/ipc
+hook-0 = echo ""
+hook-1 = python3 $HOME/.config/polybar/scripts/spotify/spotify_status.py
+initial = 1
+
+format-prefix-font = 3
+format-prefix-foreground = ${colors.spotify}
+format-prefix = "  "
+
+format-padding = ${offsets.mpadding}
+format-foreground = ${colors.light-foreground}
+format-underline = ${colors.spotify}
+
+line-size = 1
+click-left = i3-msg '[class="Spotify"] focus'
+
+; ##########################################
+; ################ settings ################
+; ##########################################
+
+[settings]
+throttle-ms = 50
+throttle-limit = 5
+
+; vim:ft=dosini

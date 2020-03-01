@@ -1,5 +1,6 @@
 #!/usr/bin/python
 
+import utils
 import argparse
 import subprocess
 import shutil
@@ -7,110 +8,26 @@ import enum
 import sys
 import os
 
-###################### Helpers ######################
-
-class bcolors:
-    HEADER = '\033[95m'
-    OKBLUE = '\033[94m'
-    OKGREEN = '\033[92m'
-    WARNING = '\033[93m'
-    FAIL = '\033[91m'
-    ENDC = '\033[0m'
-    BOLD = '\033[1m'
-    UNDERLINE = '\033[4m'
-
-def error(msg):
-    print(f"{bcolors.FAIL}[ ERROR ]{bcolors.ENDC}: {msg}")
-
-def warning(msg):
-    print(f"{bcolors.WARNING}[WARNING]{bcolors.ENDC}: {msg}")
-
-def info(msg):
-    print(f"{bcolors.OKBLUE}[ INFO  ]{bcolors.ENDC}: {msg}")
-
-def ok(msg):
-    print(f"{bcolors.OKGREEN}[  OK   ]{bcolors.ENDC}: {msg}")
-
-def str_to_bool(v):
-    if isinstance(v, bool):
-       return v
-    if v.lower() in ('yes', 'true', 't', 'y', '1'):
-        return True
-    elif v.lower() in ('no', 'false', 'f', 'n', '0'):
-        return False
-    else:
-        raise argparse.ArgumentTypeError('Boolean value expected.')
-
-def has_tool(name):
-    """Check whether `name` is on PATH and marked as executable."""
-
-    # from whichcraft import which
-    from shutil import which
-    return which(name) is not None
-
-def query_yes_no(question, default="yes"):
-    """Ask a yes/no question via raw_input() and return their answer.
-
-    "question" is a string that is presented to the user.
-    "default" is the presumed answer if the user just hits <Enter>.
-        It must be "yes" (the default), "no" or None (meaning
-        an answer is required of the user).
-
-    The "answer" return value is True for "yes" or False for "no".
-    """
-    valid = {"yes": True, "y": True, "ye": True,
-             "no": False, "n": False}
-    if default is None:
-        prompt = " [y/n] "
-    elif default == "yes":
-        prompt = " [Y/n] "
-    elif default == "no":
-        prompt = " [y/N] "
-    else:
-        raise ValueError("invalid default answer: '%s'" % default)
-
-    while True:
-        sys.stdout.write(question + prompt)
-        choice = input().lower()
-        if default is not None and choice == '':
-            return valid[default]
-        elif choice in valid:
-            return valid[choice]
-        else:
-            sys.stdout.write("Please respond with 'yes' or 'no' "
-                             "(or 'y' or 'n').\n")
-
-def exec_and_print(cmd):
-    return subprocess.run(cmd, 
-            shell=True, 
-            stdout=sys.stdout,
-            stderr=sys.stderr,
-            encoding="utf-8").returncode
-
-def exec(cmd):
-    process = subprocess.run(cmd, 
-            shell=True, 
-            stdout=subprocess.PIPE,
-            stderr=subprocess.STDOUT,
-            encoding="utf-8")
-
-    return process.stdout, process.stderr, process.returncode
-
 ###################### Application ######################
 
 class Theme(enum.Enum):
-    default = 'default'
-    p10k_lean = 'p10k_lean'
-    p10k_classic = 'p10k_classic'
-    p10k_rainbow = 'p10k_rainbow'
-    lazymechanic = 'lazymechanic'
+    default = "default"
+    p10k_lean = "p10klean"
+    p10k_classic = "p10kclassic"
+    p10k_rainbow = "p10krainbow"
+    lazymechanic = "lazymechanic"
 
     def __str__(self):
         return self.value
 
 class Config:
+    DEFAULT_THEME = "robbyrussell"
+    DST_DIR = "./test" #os.path.expanduser("~")
+    ZSH_DIR = "./zsh"
+
     def __init__(self):
         self.theme = ""
+        self.final_theme = ""
         self.zsh_custom = ""
 
     def __repr__(self):
@@ -145,48 +62,88 @@ class App:
     def _install_p10k(self):
         p10k_dir = os.path.join(self.config.zsh_custom, "themes", "powerlevel10k")
         if os.path.exists(p10k_dir):
-            answ = query_yes_no("Powerlevel10k directory already exists, delete dir and clone repo?", "yes")
+            answ = utils.query_yes_no("Powerlevel10k directory already exists, delete dir and clone repo?", "yes")
             if answ:
-                info("Remove Powerlevel10k directory...")
+                utils.info("Remove Powerlevel10k directory...")
                 shutil.rmtree(p10k_dir)
-                ok("Done!")
+                utils.ok("Done!")
             else:
-                info("Do nothing")
+                utils.ok("Do nothing")
                 return
         
-        info("Clone Powerlevel10k repo...")
+        utils.info("Clone Powerlevel10k repo...")
 
-        exit_code = exec_and_print(f"git clone --depth=1 https://github.com/romkatv/powerlevel10k.git {p10k_dir}")
+        exit_code = utils.exec_and_print(f"git clone --depth=1 https://github.com/romkatv/powerlevel10k.git {p10k_dir}")
         if exit_code != 0:
             raise Exception("git clone of 'https://github.com/romkatv/powerlevel10k.git' repo failed, try install manually")
         
-        ok("Done!")
+        utils.ok("Done!")
 
-    def _install_p10k_theme(self, filename):
-        None
-
-    def _install_custom_theme(self, name):
-        None
-
-    def _install_default_theme(self, name):
-        None
+    def _copy_exists(self):
+        utils.copy_file_if_exists(os.path.join(Config.DST_DIR, ".p10k.zsh"), os.path.join(Config.DST_DIR, ".p10k.zsh.back"))
+        utils.copy_file_if_exists(os.path.join(Config.DST_DIR, ".bashrc"), os.path.join(Config.DST_DIR, ".bashrc.back"))
+        utils.copy_file_if_exists(os.path.join(Config.DST_DIR, ".zshrc"), os.path.join(Config.DST_DIR, ".zshrc.back"))
+        utils.copy_file_if_exists(os.path.join(Config.DST_DIR, ".zshenv"), os.path.join(Config.DST_DIR, ".zshenv.back"))
+        utils.copy_file_if_exists(os.path.join(Config.DST_DIR, ".zshalias"), os.path.join(Config.DST_DIR, ".zshalias.back"))
 
     def run(self):
-        if not has_tool("git"):
+        if not utils.has_tool("git"):
             raise Exception("'git' is not installed")
+
+        utils.info(f"Installation theme is '{self.config.theme}'")
         
-        info("pre install p10k")
         self._install_p10k()
+
+        if self.config.theme == Theme.default:
+            self.config.final_theme = Config.DEFAULT_THEME
+
+        elif self.config.theme == Theme.lazymechanic:
+            self.config.final_theme = "lazymechanic/lazymechanic"
+
+        elif self.config.theme == Theme.p10k_lean:
+            shutil.copy(
+                os.path.join(self.config.ZSH_DIR, ".p10k.zsh.lean"),
+                os.path.join(self.config.DST_DIR, ".p10k.zsh")
+            )
+            self.config.final_theme = "powerlevel10k/powerlevel10k"
+
+        elif self.config.theme == Theme.p10k_classic:
+            shutil.copy(
+                os.path.join(self.config.ZSH_DIR, ".p10k.zsh.classic"),
+                os.path.join(self.config.DST_DIR, ".p10k.zsh")
+            )
+            self.config.final_theme = "powerlevel10k/powerlevel10k"
+
+        elif self.config.theme == Theme.p10k_rainbow:
+            shutil.copy(
+                os.path.join(self.config.ZSH_DIR, ".p10k.zsh.rainbow"),
+                os.path.join(self.config.DST_DIR, ".p10k.zsh")
+            )
+            self.config.final_theme = "powerlevel10k/powerlevel10k"
+
+        else:9
+            raise Exception("theme '%s' not found" % self.config.theme)
         
+        utils.info("Backup existing files...")
+        self._copy_exists()
+        utils.ok("Done")
+
+        utils.sed(
+            r"ZSH_THEME=\"[a-zA-Z0-9\/]*\"", 
+            r"ZSH_THEME=\"%s\"" % self.config.final_theme, 
+            os.path.join(Config.DST_DIR, ".zshrc")
+        )
+
+        utils.ok(f"Set ZSH_THEME=\"{self.config.final_theme}\" in '{os.path.join(Config.DST_DIR, '.zshrc')}' file")
 
 def main():
     try:
         app = App()
         return app.run()
     except Exception as err:
-        error(err)
+        utils.error(err)
     except KeyboardInterrupt:
-        warning("Process aborted by keyboard interrupt")
+        utils.warning("Process aborted by keyboard interrupt")
 
     return 1
 

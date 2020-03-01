@@ -1,6 +1,4 @@
-## Use KDE environment in i3wm
-
 #if [[ "$DESKTOP_SESSION"=~"^i3.*$" ]]; then
-#    export DESKTOP_SESSION="kde"
-#    export XDG_CURRENT_DESKTOP="KDE"
+#    export DESKTOP_SESSION="xfce"
+#    export XDG_CURRENT_DESKTOP="XFCE"
 #fi
