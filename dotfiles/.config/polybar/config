@@ -16,6 +16,9 @@ dark-foreground = #30343F
 
 spotify = #1db954
 
+time-background = #88D0BA
+time-foreground = ${self.dark-background}
+
 date-background = #81a1c1
 date-foreground = ${self.dark-foreground}
 
@@ -84,7 +87,7 @@ font-3 = Font Awesome 5 Brands:style=Regular:pixelsize=10;2
 
 modules-left = i3 xwindow
 modules-center = spotify previous playpause next
-modules-right = pulseaudio xkeyboard wlan battery date powermenu
+modules-right = pulseaudio xkeyboard wlan battery date time powermenu
 
 enable-ipc = true
 
@@ -164,7 +167,7 @@ blacklist-0 = num lock
 blacklist-1 = scroll lock
 blacklist-2 = caps lock
 
-label-layout = %layout%
+label-layout =  %layout%
 label-layout-background = ${colors.xkeyboard-background}
 label-layout-foreground = ${colors.xkeyboard-foreground}
 label-layout-padding = ${offsets.mpadding}
@@ -249,11 +252,12 @@ label-discharging = "%percentage%%"
 label-full = "%percentage%%"
 
 ; ### Only applies if <ramp-capacity> is used
-ramp-capacity-0 = 
-ramp-capacity-1 = 
-ramp-capacity-2 = 
-ramp-capacity-3 = 
-ramp-capacity-4 = 
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 = 
+ramp-capacity-5 = 
 
 ; ### Only applies if <bar-capacity> is used
 bar-capacity-width = 10
@@ -453,14 +457,29 @@ ramp-used-7-font = 1
 ramp-used-7-foreground = #fb4934
 
 ; ##########################################
+; ################## time ##################
+; ##########################################
+
+[module/time]
+type = internal/date
+
+; ### Time example: 00:00
+date = " %H:%M%"
+
+format-background = ${colors.time-background}
+format-foreground = ${colors.time-foreground}
+format-padding = ${offsets.mpadding}
+
+
+; ##########################################
 ; ################## date ##################
 ; ##########################################
 
 [module/date]
 type = internal/date
 
-; ### Date example: Mon, 01.02.2020 00:00
-date = "%a | %d.%m.%Y | %H:%M%"
+; ### Date example: Mon | 01.02.2020
+date = " %a | %d.%m.%Y"
 
 format-background = ${colors.date-background}
 format-foreground = ${colors.date-foreground}
