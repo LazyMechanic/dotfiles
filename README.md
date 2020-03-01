@@ -21,7 +21,6 @@
 | dunst                                                               | ✓        | Notification daemon                                                                                     |
 | compton                                                             | ✓        | Compositor for X                                                                                        |
 | autorandr                                                           | ✓        | Automatically select a display configuration based on connected devices                                 |
-| [poll-xrandr](https://github.com/nalipaz/poll-xrandr)               | ✓        | Bash script to poll xrandr until connected screens change, then run `autorandr --change` when detected. |
 | polybar                                                             | ✓        | More changeable bar instead i3bar                                                                       |
 | dmenu                                                               | ✓        | It is a fast and lightweight dynamic menu for X                                                         |
 | rofi                                                                | ✓        | It like dmenu, will provide the user with a textual list of options where one or more can be selected   |
