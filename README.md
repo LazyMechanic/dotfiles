@@ -19,7 +19,7 @@
 | feh                                                                 | ✓        | Show wallpaper                                                                                          |
 | [betterlockscreen](https://github.com/pavanjadhaw/betterlockscreen) | ✓        | Show wallpaper                                                                                          |
 | dunst                                                               | ✓        | Notification daemon                                                                                     |
-| compton                                                             | ✓        | Compositor for X                                                                                        |
+| picom                                                               | ✓        | Compositor for X                                                                                        |
 | autorandr                                                           | ✓        | Automatically select a display configuration based on connected devices                                 |
 | polybar                                                             | ✓        | More changeable bar instead i3bar                                                                       |
 | dmenu                                                               | ✓        | It is a fast and lightweight dynamic menu for X                                                         |
