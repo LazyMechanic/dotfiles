@@ -255,9 +255,11 @@ label-full = "%percentage%%"
 ramp-capacity-0 = 
 ramp-capacity-1 = 
 ramp-capacity-2 = 
-ramp-capacity-3 = 
-ramp-capacity-4 = 
-ramp-capacity-5 = 
+ramp-capacity-3 = 
+ramp-capacity-4 = 
+ramp-capacity-5 = 
+ramp-capacity-6 = 
+ramp-capacity-7 = 
 
 ; ### Only applies if <bar-capacity> is used
 bar-capacity-width = 10
@@ -333,7 +335,7 @@ label-urgent-font = 1
 
 label-visible = %index%
 label-visible-padding = 2
-label-visible-margin = 1
+label-visible-margin = 0
 label-visible-font = 1
 label-visible-background = #fec7cd
 label-visible-foreground = ${colors.dark-foreground}
