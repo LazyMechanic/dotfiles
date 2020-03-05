@@ -17,7 +17,7 @@
 | playerctl                                                           | ✓        | Command-line utility for controlling media players over D-BUS                                           |
 | lxappearance-gtk3                                                   | ✖        | Standard theme switcher of LXD                                                                          |
 | feh                                                                 | ✓        | Show wallpaper                                                                                          |
-| [betterlockscreen](https://github.com/pavanjadhaw/betterlockscreen) | ✓        | Show wallpaper                                                                                          |
+| [multilockscreen](https://github.com/noctuid/multilockscreen)       | ✓        | This is a fork of betterlockscreen with support for multiple monitors                                   |
 | dunst                                                               | ✓        | Notification daemon                                                                                     |
 | picom                                                               | ✓        | Compositor for X                                                                                        |
 | autorandr                                                           | ✓        | Automatically select a display configuration based on connected devices                                 |
