@@ -1,2 +1,2 @@
 event=button/lid LID (open|close)
-action=/etc/acpi/autorandr.sh
+action=/etc/acpi/lid-switch.sh

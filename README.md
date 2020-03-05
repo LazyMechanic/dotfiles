@@ -24,6 +24,7 @@
 | polybar                                                             | ✓        | More changeable bar instead i3bar                                                                       |
 | dmenu                                                               | ✓        | It is a fast and lightweight dynamic menu for X                                                         |
 | rofi                                                                | ✓        | It like dmenu, will provide the user with a textual list of options where one or more can be selected   |
+| xss-lock                                                            | ✓        | Use external locker as X screen saver                                                                   |
 | (Font) Noto Sans Mono                                               | ✓        | Main font in polybar                                                                                    |
 | (Font) Awesome Pro Solid                                            | ✓        | Font for icons                                                                                          |
 
