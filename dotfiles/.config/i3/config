@@ -193,15 +193,22 @@ bindsym $mod+Shift+S exec --no-startup-id flameshot gui
 ###     - dim
 ###     - dimblur
 bindsym $mod+Escape exec --no-startup-id multilockscreen -l dimblur
-bindsym $mod+Shift+Escape exec --no-startup-id multilockscreen -l dimblur && systemctl suspend
+bindsym $mod+Shift+Escape exec --no-startup-id systemctl suspend
 
 ### Program launcher
 bindsym $mod+Shift+d exec --no-startup-id dmenu_run -fn "Noto Sans 10px"
 bindsym $mod+d exec --no-startup-id rofi -lines 12 -padding 18 -width 30 -location 0 -show drun -sidebar-mode -columns 2 -font 'Noto Sans 12px'
 
+# Screen brightness controls
+bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 10;
+bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 10;
+
 ###################################################################
 ########################## USER EXEC ##############################
 ###################################################################
+
+### Init workspace
+exec --no-startup-id $HOME/.config/i3/init_workspace.sh
 
 ### Start messengers
 exec --no-startup-id vk-messenger
@@ -243,7 +250,7 @@ exec_always --no-startup-id setxkbmap -model pc104 -layout us,ru -option grp:alt
 exec_always --no-startup-id multilockscreen -w
 
 ### Start spotify controls listener
-exec_always --no-startup-id $HOME/.config/polybar/launch-spotify-controls.sh
+exec_always --no-startup-id $HOME/.config/polybar/scripts/spotify/launch-spotify-controls.sh
 
 ### Bar
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
@@ -261,6 +268,8 @@ for_window [class="Spotify"] move to workspace $ws10
 ###################################################################
 ##################### USER CUSTOM CONFIGS #########################
 ###################################################################
+
+for_window [class="Yad" title="yad-calendar"] floating enable
 
 ### Window titlebars
 for_window [class=".*"] border pixel 2

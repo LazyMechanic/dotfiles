@@ -25,6 +25,8 @@
 | dmenu                                                               | ✓        | It is a fast and lightweight dynamic menu for X                                                         |
 | rofi                                                                | ✓        | It like dmenu, will provide the user with a textual list of options where one or more can be selected   |
 | xss-lock                                                            | ✓        | Use external locker as X screen saver                                                                   |
+| xbacklight                                                          | ✖        | Adjust backlight brightness using RandR extension                                                       |
+| yad                                                                 | ✓        | Program allows you to display GTK+ dialog boxes from command line or shell scripts. Needs for calendar  |
 | (Font) Noto Sans Mono                                               | ✓        | Main font in polybar                                                                                    |
 | (Font) Awesome Pro Solid                                            | ✓        | Font for icons                                                                                          |
 

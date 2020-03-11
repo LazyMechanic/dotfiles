@@ -16,6 +16,20 @@ dark-foreground = #30343F
 
 spotify = #1db954
 
+i3-focused-background = #DFA3A8
+i3-focused-foreground = ${self.dark-foreground}
+
+i3-unfocused-background = ${self.dark-background} 
+;#BF616A
+i3-unfocused-foreground = ${self.light-foreground} 
+;${self.dark-foreground}
+
+i3-visible-background = #A8C5E0
+i3-visible-foreground = ${self.dark-foreground}
+
+i3-urgent-background = #7C2028
+i3-urgent-foreground = ${self.light-foreground}
+
 time-background = #88D0BA
 time-foreground = ${self.dark-background}
 
@@ -52,6 +66,8 @@ powermenu-foreground = ${self.dark-foreground}
 mpadding = 2
 mmargin = 0
 
+i3-margin = 0
+
 ; ##########################################
 ; ############### bar/general ##############
 ; ##########################################
@@ -86,8 +102,8 @@ font-2 = Font Awesome 5 Pro:style=Regular:pixelsize=10;2
 font-3 = Font Awesome 5 Brands:style=Regular:pixelsize=10;2
 
 modules-left = i3 xwindow
-modules-center = spotify previous playpause next
-modules-right = pulseaudio xkeyboard wlan battery date time powermenu
+modules-center = 
+modules-right = pulseaudio xkeyboard wlan battery popup-calendar time powermenu
 
 enable-ipc = true
 
@@ -318,27 +334,31 @@ format-spacing = 0
 
 label-focused = %index%
 label-focused-padding = 2
-label-focused-margin = 0
+label-focused-margin = ${offsets.i3-margin}
 label-focused-font = 1
-label-focused-background = #bf616a
-label-focused-foreground = ${colors.dark-foreground}
+label-focused-background = ${colors.i3-focused-background}
+label-focused-foreground = ${colors.i3-focused-foreground}
 
 label-unfocused = %index%
 label-unfocused-padding = 2
-label-unfocused-margin = 0
+label-unfocused-margin = ${offsets.i3-margin}
 label-unfocused-font = 1
+label-unfocused-background = ${colors.i3-unfocused-background}
+label-unfocused-foreground = ${colors.i3-unfocused-foreground}
 
 label-urgent = %index%
 label-urgent-padding = 2
-label-urgent-margin = 0
+label-urgent-margin = ${offsets.i3-margin}
 label-urgent-font = 1
+label-urgent-background = ${colors.i3-urgent-background}
+label-urgent-foreground = ${colors.i3-urgent-foreground}
 
 label-visible = %index%
 label-visible-padding = 2
-label-visible-margin = 0
+label-visible-margin = ${offsets.i3-margin}
 label-visible-font = 1
-label-visible-background = #fec7cd
-label-visible-foreground = ${colors.dark-foreground}
+label-visible-background = ${colors.i3-visible-background}
+label-visible-foreground = ${colors.i3-visible-foreground}
 
 ; ##########################################
 ; ################## wlan ##################
@@ -355,7 +375,8 @@ label-disconnected = %ifname% disconnected
 
 label-connected = %essid%
 
-format-connected = %{A1:nm-connection-editor:}<ramp-signal> <label-connected>%{A}
+;format-connected = %{A1:nm-connection-editor:}<ramp-signal> <label-connected>%{A}
+format-connected = "<ramp-signal> <label-connected>"
 format-connected-background = ${colors.wlan-background}
 format-connected-foreground = ${colors.wlan-foreground}
 format-connected-padding = ${offsets.mpadding}
@@ -472,6 +493,20 @@ format-background = ${colors.time-background}
 format-foreground = ${colors.time-foreground}
 format-padding = ${offsets.mpadding}
 
+; ##########################################
+; ############# popup-calendar #############
+; ##########################################
+
+[module/popup-calendar]
+type = custom/script
+exec = $HOME/.config/polybar/scripts/popup-calendar.sh
+interval = 5
+
+format-background = ${colors.date-background}
+format-foreground = ${colors.date-foreground}
+format-padding = ${offsets.mpadding}
+
+click-left = $HOME/.config/polybar/scripts/popup-calendar.sh --popup &
 
 ; ##########################################
 ; ################## date ##################
@@ -483,6 +518,7 @@ type = internal/date
 ; ### Date example: Mon | 01.02.2020
 date = " %a | %d.%m.%Y"
 
+;format = "%{A1:$HOME/.config/polybar/scripts/popup-calendar.sh --popup &:}<date>%{A}"
 format-background = ${colors.date-background}
 format-foreground = ${colors.date-foreground}
 format-padding = ${offsets.mpadding}
