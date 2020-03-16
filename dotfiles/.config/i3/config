@@ -192,12 +192,12 @@ bindsym $mod+Shift+S exec --no-startup-id flameshot gui
 ###     - blur
 ###     - dim
 ###     - dimblur
-bindsym $mod+Escape exec --no-startup-id multilockscreen -l dimblur
+bindsym $mod+Escape exec --no-startup-id $HOME/.config/i3/lock.sh
 bindsym $mod+Shift+Escape exec --no-startup-id systemctl suspend
 
 ### Program launcher
 bindsym $mod+Shift+d exec --no-startup-id dmenu_run -fn "Noto Sans 10px"
-bindsym $mod+d exec --no-startup-id rofi -lines 12 -padding 18 -width 30 -location 0 -show drun -sidebar-mode -columns 2 -font 'Noto Sans 12px'
+bindsym $mod+d exec --no-startup-id $HOME/.config/i3/rofi.sh
 
 # Screen brightness controls
 bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 10;
@@ -234,7 +234,7 @@ exec --no-startup-id dunst
 # exec --no-startup-id picom
 
 ### Lock after wake up
-exec --no-startup-id xss-lock -l -- multilockscreen -l dimblur
+exec --no-startup-id xss-lock -l -- $HOME/.config/i3/lock.sh
 
 ###################################################################
 ###################### USER EXEC_ALWAYS ###########################
@@ -251,6 +251,9 @@ exec_always --no-startup-id multilockscreen -w
 
 ### Start spotify controls listener
 exec_always --no-startup-id $HOME/.config/polybar/scripts/spotify/launch-spotify-controls.sh
+
+### Enable change keyboard layout by window
+exec_always --no-startup-id xkb-switch --i3
 
 ### Bar
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
@@ -281,10 +284,10 @@ gaps inner 8
 smart_gaps on
 
 # class                 border  bground text    indicator child_border
-client.focused          #27292F #949CB2 #27292F #BF616A   #D8DEE8
+client.focused          #27292F #949CB2 #27292F #BF616A   #88D0BA
 client.focused_inactive #27292F #4B5262 #D8DEE8 #30343F   #30343F
 client.unfocused        #27292F #30343F #D8DEE8 #30343F   #30343F
-client.urgent           #27292F #BF616A #D8DEE8 #30343F   #30343F
+client.urgent           #27292F #7C2028 #D8DEE8 #30343F   #30343F
 client.placeholder      #27292F #2F343F #D8DEE8 #30343F   #30343F
 
 client.background       #30343F

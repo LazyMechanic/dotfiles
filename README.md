@@ -17,7 +17,7 @@
 | playerctl                                                           | ✓        | Command-line utility for controlling media players over D-BUS                                           |
 | lxappearance-gtk3                                                   | ✖        | Standard theme switcher of LXD                                                                          |
 | feh                                                                 | ✓        | Show wallpaper                                                                                          |
-| [multilockscreen](https://github.com/noctuid/multilockscreen)       | ✓        | This is a fork of betterlockscreen with support for multiple monitors                                   |
+| [i3lock-color](https://github.com/Raymo111/i3lock-color)            | ✓        | A modern version of i3lock with color functionality by eBrnd                                            |
 | dunst                                                               | ✓        | Notification daemon                                                                                     |
 | picom                                                               | ✓        | Compositor for X                                                                                        |
 | autorandr                                                           | ✓        | Automatically select a display configuration based on connected devices                                 |
@@ -27,6 +27,7 @@
 | xss-lock                                                            | ✓        | Use external locker as X screen saver                                                                   |
 | xbacklight                                                          | ✖        | Adjust backlight brightness using RandR extension                                                       |
 | yad                                                                 | ✓        | Program allows you to display GTK+ dialog boxes from command line or shell scripts. Needs for calendar  |
+| [xkb-switch-i3](https://github.com/zebradil/xkb-switch-i3)          | ✓        | This i3-flavored version of xkb-switch is capable of switching layout groups automatically in i3wm      |
 | (Font) Noto Sans Mono                                               | ✓        | Main font in polybar                                                                                    |
 | (Font) Awesome Pro Solid                                            | ✓        | Font for icons                                                                                          |
 
