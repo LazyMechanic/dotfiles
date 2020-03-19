@@ -1,0 +1,14 @@
+[Unit]
+Description = Lock screen when going to sleep/suspend/hibernate
+
+[Service]
+User=%I
+Type=simple
+Environment=DISPLAY=:0
+ExecStart=/home/lazymechanic/.config/i3/lock.sh
+TimeoutSec=infinity
+
+[Install]
+WantedBy=sleep.target
+WantedBy=suspend.target
+WantedBy=hibernate.target
