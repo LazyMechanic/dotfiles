@@ -226,9 +226,6 @@ exec --no-startup-id kdeconnect-indicator
 ### Notification daemon
 exec --no-startup-id dunst
 
-### Compositor for X
-exec --no-startup-id picom
-
 ### Lock after wake up
 exec --no-startup-id xss-lock -l -- $HOME/.config/i3/lock.sh
 
@@ -243,8 +240,11 @@ exec_always --no-startup-id autorandr --change --force
 exec_always --no-startup-id setxkbmap -model pc104 -layout us,ru -option grp:alt_shift_toggle
 
 ### Setup wallpaper
-exec_always --no-startup-id feh --bg-fill $HOME/.config/wallpapers/wallpaper_18.png \
-				--bg-fill $HOME/.config/wallpapers/wallpaper_18.png
+exec_always --no-startup-id feh --bg-fill $HOME/.config/wallpapers/wallpaper_23.png \
+				--bg-fill $HOME/.config/wallpapers/wallpaper_23.png
+
+### Start compositor
+exec_always --no-startup-id killall picom || picom
 
 ### Start spotify controls listener
 exec_always --no-startup-id $HOME/.config/polybar/scripts/spotify/launch-spotify-controls.sh
