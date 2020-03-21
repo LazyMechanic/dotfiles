@@ -244,7 +244,7 @@ exec_always --no-startup-id feh --bg-fill $HOME/.config/wallpapers/wallpaper_23.
 				--bg-fill $HOME/.config/wallpapers/wallpaper_23.png
 
 ### Start compositor
-exec_always --no-startup-id killall picom || picom
+exec_always --no-startup-id $HOME/.config/i3/picom.sh
 
 ### Start spotify controls listener
 exec_always --no-startup-id $HOME/.config/polybar/scripts/spotify/launch-spotify-controls.sh
