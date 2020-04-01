@@ -188,12 +188,12 @@ bindsym XF86AudioPrev  exec --no-startup-id playerctl previous
 bindsym $mod+Shift+S exec --no-startup-id flameshot gui
 
 ### Lock screen
-bindsym $mod+Escape exec --no-startup-id $HOME/.config/i3/lock.sh
+bindsym $mod+Escape exec --no-startup-id $HOME/.local/bin/lock.sh
 bindsym $mod+Shift+Escape exec --no-startup-id systemctl suspend
 
 ### Program launcher
 bindsym $mod+Shift+d exec --no-startup-id dmenu_run -fn "Noto Sans 10px"
-bindsym $mod+d exec --no-startup-id $HOME/.config/i3/rofi.sh
+bindsym $mod+d exec --no-startup-id $HOME/.local/bin/rofi.sh
 
 # Screen brightness controls
 bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 10;
@@ -227,7 +227,7 @@ exec --no-startup-id kdeconnect-indicator
 exec --no-startup-id dunst
 
 ### Lock after wake up
-exec --no-startup-id xss-lock -l -- $HOME/.config/i3/lock.sh
+exec --no-startup-id xss-lock -l -- $HOME/.local/bin/lock.sh
 
 ###################################################################
 ###################### USER EXEC_ALWAYS ###########################
