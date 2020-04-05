@@ -14,6 +14,9 @@ light-foreground = #E5EAF0
 ;#272A33
 dark-foreground = #30343F
 
+aur-updates-background = #FFBB00
+aur-updates-foregorund = ${self.dark-foreground}
+
 spotify = #1db954
 
 i3-focused-background = #DFA3A8
@@ -102,7 +105,7 @@ font-2 = Font Awesome 5 Pro:style=Regular:pixelsize=10;2
 font-3 = Font Awesome 5 Brands:style=Regular:pixelsize=10;2
 
 modules-left = i3 xwindow
-modules-center = 
+modules-center = aur-updates
 modules-right = pulseaudio xkeyboard wlan battery popup-calendar time powermenu
 
 enable-ipc = true
@@ -153,6 +156,23 @@ tray-padding = ${offsets.mpadding}
 
 ; ### Scale factor for tray clients
 tray-scale = 1.0
+
+
+; ##########################################
+; ############## aur-updates ###############
+; ##########################################
+[module/aur-updates]
+type = custom/script
+exec = yay -u | wc -l
+interval = 1000
+label = "AUR: %output%"
+label-font = 1
+
+#format-foreground = ${colors.aur-updates-foreground}
+#format-background = ${colors.aur-updates-background}
+format-prefix = " "
+format-prefix-foreground = #FFBB00
+format-underline = #FFBB00
 
 ; ##########################################
 ; ################ xwindow #################
@@ -388,10 +408,11 @@ format-disconnected-padding = ${offsets.mpadding}
 
 ramp-signal-0 = 
 ramp-signal-1 = 
-ramp-signal-2 = 
+ramp-signal-2 = 
 ramp-signal-3 = 
-ramp-signal-4 = 
+ramp-signal-4 = 
 ramp-signal-5 = 
+ramp-signal-6 = 
 ramp-signal-font = 2
 
 ; ##########################################
