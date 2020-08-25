@@ -137,8 +137,8 @@ class App:
             raise Exception("file '%s' not found" % zshrc_file_path)
 
         utils.sed(
-            r"ZSH_THEME=\"[a-zA-Z0-9\/]*\"", 
-            r"ZSH_THEME=\"%s\"" % self.config.final_theme, 
+            r'ZSH_THEME=\"[a-zA-Z0-9\/]*\"', 
+            r'ZSH_THEME="%s"' % self.config.final_theme, 
             zshrc_file_path
         )
 

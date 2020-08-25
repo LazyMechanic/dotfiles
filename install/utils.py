@@ -104,11 +104,11 @@ def sed(src_re, dst_re, file):
     with open(file, "r") as f:
         data = f.readlines()
 
-    for line in data:
-        line = re.sub(
+    for i in range(len(data)):
+        data[i] = re.sub(
             src_re,
             dst_re,
-            line
+            data[i]
         )
 
     with open(file, "w") as f:
