@@ -19,16 +19,16 @@ class bcolors:
     UNDERLINE = '\033[4m'
 
 def error(msg):
-    print(f"{bcolors.FAIL}[ ERROR ]{bcolors.ENDC}: {msg}")
+    print(f"{bcolors.FAIL}[ERRO]{bcolors.ENDC}: {msg}")
 
 def warning(msg):
-    print(f"{bcolors.WARNING}[WARNING]{bcolors.ENDC}: {msg}")
+    print(f"{bcolors.WARNING}[WARN]{bcolors.ENDC}: {msg}")
 
 def info(msg):
-    print(f"{bcolors.OKBLUE}[ INFO  ]{bcolors.ENDC}: {msg}")
+    print(f"{bcolors.OKBLUE}[INFO]{bcolors.ENDC}: {msg}")
 
 def ok(msg):
-    print(f"{bcolors.OKGREEN}[  OK   ]{bcolors.ENDC}: {msg}")
+    print(f"{bcolors.OKGREEN}[ OK ]{bcolors.ENDC}: {msg}")
 
 def str_to_bool(v):
     if isinstance(v, bool):
