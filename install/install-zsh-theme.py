@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
 import utils
 import argparse
@@ -121,7 +121,7 @@ class App:
             )
             self.config.final_theme = "powerlevel10k/powerlevel10k"
 
-        else:9
+        else:
             raise Exception("theme '%s' not found" % self.config.theme)
         
         utils.info("Backup existing files...")
