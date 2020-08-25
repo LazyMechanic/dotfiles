@@ -128,8 +128,6 @@ check_oh_my_zsh() {
 
 clone_project() {
     info "Start clone project..."
-
-    info "$_LOCAL_REPO"
     
     if [[ -d "$_LOCAL_REPO" ]];
     then

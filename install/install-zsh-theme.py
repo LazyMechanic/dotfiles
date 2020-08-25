@@ -22,7 +22,7 @@ class Theme(enum.Enum):
 
 class Config:
     DEFAULT_THEME = "robbyrussell"
-    DST_DIR = "./test" #os.path.expanduser("~")
+    DST_DIR = os.path.expanduser("~")
     ZSH_DIR = "./zsh"
 
     def __init__(self):
