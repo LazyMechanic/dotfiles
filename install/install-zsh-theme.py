@@ -130,14 +130,16 @@ class App:
         
         self._copy_exists()
 
+        zshrc_file_path = os.path.join(Config.DST_DIR, ".zshrc")
+
         # If .zshrc file not found
-        if not os.path.isfile(os.path.join(Config.DST_DIR, ".zshrc")):
-            raise Exception("file '%s' not found" % os.path.join(Config.DST_DIR, ".zshrc"))
+        if not os.path.isfile(zshrc_file_path):
+            raise Exception("file '%s' not found" % zshrc_file_path)
 
         utils.sed(
             r"ZSH_THEME=\"[a-zA-Z0-9\/]*\"", 
             r"ZSH_THEME=\"%s\"" % self.config.final_theme, 
-            os.path.join(Config.DST_DIR, ".zshrc")
+            zshrc_file_path
         )
 
         utils.ok(f"Set ZSH_THEME=\"{self.config.final_theme}\" in '{os.path.join(Config.DST_DIR, '.zshrc')}' file")

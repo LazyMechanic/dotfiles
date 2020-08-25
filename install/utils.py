@@ -102,11 +102,13 @@ def copy_mkdir(src_file, dst_file):
 
 def sed(src_re, dst_re, file):
     for line in fileinput.input(file, inplace=True):
+        warn("before: %s" % line)
         line = re.sub(
             src_re,
             dst_re,
             line
         )
+        warn("after: %s" % line)
 
 def copy_file_if_exists(src_file, dst_file):
     if os.path.isfile(src_file):
