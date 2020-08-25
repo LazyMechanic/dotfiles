@@ -24,7 +24,7 @@ class Theme(enum.Enum):
 class Config:
     DEFAULT_THEME = "robbyrussell"
     DST_DIR = os.path.expanduser("~")
-    ZSH_DIR = os.path.join(os.getcwd(), "zsh")
+    ZSH_DIR = os.path.join(os.path.dirname(os.path.realpath(__file__)), "zsh")
 
     def __init__(self):
         self.theme = ""
