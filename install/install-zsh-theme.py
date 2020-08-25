@@ -109,6 +109,7 @@ class App:
 
         elif self.config.theme == Theme.lazymechanic:
             self.config.final_theme = "lazymechanic/lazymechanic"
+            self._install_lazymechanic()
 
         elif self.config.theme == Theme.p10k_lean:
             shutil.copy(
