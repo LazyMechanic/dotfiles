@@ -135,6 +135,7 @@ class App:
         )
 
         utils.ok(f"Set ZSH_THEME=\"{self.config.final_theme}\" in '{os.path.join(Config.DST_DIR, '.zshrc')}' file")
+        return 0
 
 def main():
     try:
@@ -148,4 +149,5 @@ def main():
     return 1
 
 if __name__ == "__main__":
-    main()
+    code = main()
+    sys.exit(code)
