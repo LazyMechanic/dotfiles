@@ -110,4 +110,5 @@ def sed(src_re, dst_re, file):
 
 def copy_file_if_exists(src_file, dst_file):
     if os.path.isfile(src_file):
+        info(f"Copy '{src_file}' -> '{dst_file}'")
         shutil.copy(src_file, dst_file)
