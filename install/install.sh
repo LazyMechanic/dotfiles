@@ -103,7 +103,7 @@ yes_no() {
 ######################## VARIABLES BEGIN ########################
 
 _REMOTE_REPO="https://github.com/LazyMechanic/configs.git"
-_LOCAL_REPO="./lazymechanic.configs"
+_LOCAL_REPO="lazymechanic.configs"
 _ZSH_CUSTOM=""
 _FONTS_DIR="$_LOCAL_REPO/fonts"
 
