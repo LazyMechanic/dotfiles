@@ -47,12 +47,12 @@
 ## How to install 
  **via curl**
  ```bash
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/LazyMechanic/dotfiles/master/install/install-dotfiles.sh) ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}"
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/LazyMechanic/dotfiles/master/install/install.sh) ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}"
  ```
 
 **via wget** 
 ```bash
-bash -c "$(wget -O- https://raw.githubusercontent.com/LazyMechanic/dotfiles/master/install/install-dotfiles.sh) ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}" 
+bash -c "$(wget -O- https://raw.githubusercontent.com/LazyMechanic/dotfiles/master/install/install.sh) ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}" 
 ```
 
 ## Zsh themes
