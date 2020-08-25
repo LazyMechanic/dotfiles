@@ -66,7 +66,7 @@ class App:
             if answ:
                 utils.info("Remove Powerlevel10k directory...")
                 shutil.rmtree(p10k_dir)
-                utils.ok("Done!")
+                utils.ok("Done")
             else:
                 utils.ok("Do nothing")
                 return
@@ -77,14 +77,18 @@ class App:
         if exit_code != 0:
             raise Exception("git clone of 'https://github.com/romkatv/powerlevel10k.git' repo failed, try install manually")
         
-        utils.ok("Done!")
+        utils.ok("Done")
 
     def _copy_exists(self):
+        utils.info("Backup existing files...")
+
         utils.copy_file_if_exists(os.path.join(Config.DST_DIR, ".p10k.zsh"), os.path.join(Config.DST_DIR, ".p10k.zsh.back"))
         utils.copy_file_if_exists(os.path.join(Config.DST_DIR, ".bashrc"), os.path.join(Config.DST_DIR, ".bashrc.back"))
         utils.copy_file_if_exists(os.path.join(Config.DST_DIR, ".zshrc"), os.path.join(Config.DST_DIR, ".zshrc.back"))
         utils.copy_file_if_exists(os.path.join(Config.DST_DIR, ".zshenv"), os.path.join(Config.DST_DIR, ".zshenv.back"))
         utils.copy_file_if_exists(os.path.join(Config.DST_DIR, ".zshalias"), os.path.join(Config.DST_DIR, ".zshalias.back"))
+        
+        utils.ok("Done")
 
     def run(self):
         if not utils.has_tool("git"):
@@ -124,9 +128,11 @@ class App:
         else:
             raise Exception("theme '%s' not found" % self.config.theme)
         
-        utils.info("Backup existing files...")
         self._copy_exists()
-        utils.ok("Done")
+
+        # If .zshrc file not found
+        if not os.path.isfile(os.path.join(Config.DST_DIR, ".zshrc")):
+            raise Exception("file '%s' not found" % os.path.join(Config.DST_DIR, ".zshrc"))
 
         utils.sed(
             r"ZSH_THEME=\"[a-zA-Z0-9\/]*\"", 
