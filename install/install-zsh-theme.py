@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 
+from distutils.dir_util import copy_tree
 import utils
 import argparse
 import subprocess
@@ -58,7 +59,6 @@ class App:
 
         return config
 
-
     def _install_p10k(self):
         p10k_dir = os.path.join(self.config.zsh_custom, "themes", "powerlevel10k")
         if os.path.exists(p10k_dir):
@@ -78,6 +78,12 @@ class App:
             raise Exception("git clone of 'https://github.com/romkatv/powerlevel10k.git' repo failed, try install manually")
         
         utils.ok("Done")
+
+    def _install_lazymechanic(self):
+        dst_dir = os.path.join(self.config.zsh_custom, "themes", "lazymechanic")
+        src_dir = os.path.join(Config.ZSH_DIR, "lazymechanic")
+
+        copy_tree(src_dir, dst_dir)
 
     def _copy_exists(self):
         utils.info("Backup existing files...")
