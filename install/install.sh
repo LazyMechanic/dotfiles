@@ -202,6 +202,7 @@ install_zsh_theme() {
     fi
     
     ok "Zsh theme installed"
+    info "Start zsh session and call 'source ~/.zshrc'"
 }
 
 install_fonts() {
@@ -250,7 +251,7 @@ select_action() {
                 echo "fonts"
                 return
                 ;;
-            "Install dotfiles")
+            "Install dotfiles (not working yet)")
                 echo "dotfiles"
                 return
                 ;;
@@ -303,6 +304,7 @@ main() {
     # Check commands
     check_command git
     check_command sed
+    check_command source
     check_command python3
     
     # If no has argument
@@ -319,8 +321,6 @@ main() {
     clone_project
     main_loop
     remove_project
-    
-    #source ~/.bashrc
 }
 
 main $@

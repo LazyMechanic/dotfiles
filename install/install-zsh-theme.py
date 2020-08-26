@@ -132,6 +132,37 @@ class App:
         utils.copy_file_if_exists(os.path.join(Config.ZSH_DIR, ".zshalias"), os.path.join(Config.DST_DIR, ".zshalias"))
         utils.ok("Done")
 
+    def _install_zsh_plugins(self):
+        utils.info("Install zsh plugins...")
+
+        plugins_dir = os.path.join(self.config.zsh_custom, "plugins")
+        plugins = [
+            ("https://github.com/zsh-users/zsh-autosuggestions", "zsh-autosuggestions"),
+        ]
+
+        for plugin_git, plugin_name in plugins:
+            dir = os.path.join(plugins_dir, plugin_name)
+
+            if os.path.exists(dir):
+            answ = utils.query_yes_no(f"{plugin_name} already installed, delete dir and clone repo?", "yes")
+            if answ:
+                utils.info(f"Remove {dir} directory...")
+                shutil.rmtree(dir)
+                utils.ok("Done")
+            else:
+                utils.ok("Do nothing")
+                continue
+        
+            utils.info(f"Clone {plugin_name} repo...")
+
+            exit_code = utils.exec_and_print(f"git clone {plugin_git} {dir}")
+            if exit_code != 0:
+                raise Exception(f"git clone of '{plugin_git}' repo failed, try install manually")
+
+            utils.ok("Done")
+
+        utils.ok("Plugins installed successfully")
+
     def _setup_theme(self):
         utils.info("Setup zsh theme...")
 
@@ -149,17 +180,20 @@ class App:
         
         utils.ok("Done")
 
-    def run(self):
+    def _check_tools(self):
         if not utils.has_tool("git"):
             raise Exception("'git' is not installed")
 
-        utils.info(f"Installation theme is '{self.config.theme}'")
-        
+    def run(self):
+        self._check_tools()
         self._copy_exists()
+
+        utils.info(f"Installation theme is '{self.config.theme}'")
         
         self._install_p10k()
         self._install_theme_conf()
         self._install_zsh_conf()
+        self._install_zsh_plugins()
         self._setup_theme()
         
         return 0
