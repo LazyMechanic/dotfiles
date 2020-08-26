@@ -79,37 +79,25 @@ class App:
         
         utils.ok("Done")
 
-    def _install_lazymechanic(self):
-        dst_dir = os.path.join(self.config.zsh_custom, "themes", "lazymechanic")
-        src_dir = os.path.join(Config.ZSH_DIR, "lazymechanic")
-
-        copy_tree(src_dir, dst_dir)
-
     def _copy_exists(self):
         utils.info("Backup existing files...")
-
         utils.copy_file_if_exists(os.path.join(Config.DST_DIR, ".p10k.zsh"), os.path.join(Config.DST_DIR, ".p10k.zsh.back"))
-        utils.copy_file_if_exists(os.path.join(Config.DST_DIR, ".bashrc"), os.path.join(Config.DST_DIR, ".bashrc.back"))
         utils.copy_file_if_exists(os.path.join(Config.DST_DIR, ".zshrc"), os.path.join(Config.DST_DIR, ".zshrc.back"))
         utils.copy_file_if_exists(os.path.join(Config.DST_DIR, ".zshenv"), os.path.join(Config.DST_DIR, ".zshenv.back"))
         utils.copy_file_if_exists(os.path.join(Config.DST_DIR, ".zshalias"), os.path.join(Config.DST_DIR, ".zshalias.back"))
-        
         utils.ok("Done")
 
-    def run(self):
-        if not utils.has_tool("git"):
-            raise Exception("'git' is not installed")
-
-        utils.info(f"Installation theme is '{self.config.theme}'")
-        
-        self._install_p10k()
+    def _install_theme_conf(self):
+        utils.info("Install theme files...")
 
         if self.config.theme == Theme.default:
             self.config.final_theme = Config.DEFAULT_THEME
 
         elif self.config.theme == Theme.lazymechanic:
+            dst_dir = os.path.join(self.config.zsh_custom, "themes", "lazymechanic")
+            src_dir = os.path.join(Config.ZSH_DIR, "lazymechanic")
+            copy_tree(src_dir, dst_dir)
             self.config.final_theme = "lazymechanic/lazymechanic"
-            self._install_lazymechanic()
 
         elif self.config.theme == Theme.p10k_lean:
             shutil.copy(
@@ -134,8 +122,18 @@ class App:
 
         else:
             raise Exception("theme '%s' not found" % self.config.theme)
-        
-        self._copy_exists()
+            
+        utils.ok("Done")
+
+    def _install_zsh_conf(self):
+        utils.info("Install zsh configs files...")
+        utils.copy_file_if_exists(os.path.join(Config.ZSH_DIR, ".zshrc"), os.path.join(Config.DST_DIR, ".zshrc.back"))
+        utils.copy_file_if_exists(os.path.join(Config.ZSH_DIR, ".zshenv"), os.path.join(Config.DST_DIR, ".zshenv.back"))
+        utils.copy_file_if_exists(os.path.join(Config.ZSH_DIR, ".zshalias"), os.path.join(Config.DST_DIR, ".zshalias.back"))
+        utils.ok("Done")
+
+    def _setup_theme(self):
+        utils.info("Setup zsh theme...")
 
         zshrc_file_path = os.path.join(Config.DST_DIR, ".zshrc")
 
@@ -148,8 +146,22 @@ class App:
             r'ZSH_THEME="%s"' % self.config.final_theme, 
             zshrc_file_path
         )
+        
+        utils.ok("Done")
 
-        utils.ok(f"Set ZSH_THEME=\"{self.config.final_theme}\" in '{os.path.join(Config.DST_DIR, '.zshrc')}' file")
+    def run(self):
+        if not utils.has_tool("git"):
+            raise Exception("'git' is not installed")
+
+        utils.info(f"Installation theme is '{self.config.theme}'")
+        
+        self._copy_exists()
+        
+        self._install_p10k()
+        self._install_theme_conf()
+        self._install_zsh_conf()
+        self._setup_theme()
+        
         return 0
 
 def main():
