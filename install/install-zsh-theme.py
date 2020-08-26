@@ -144,14 +144,14 @@ class App:
             dir = os.path.join(plugins_dir, plugin_name)
 
             if os.path.exists(dir):
-            answ = utils.query_yes_no(f"{plugin_name} already installed, delete dir and clone repo?", "yes")
-            if answ:
-                utils.info(f"Remove {dir} directory...")
-                shutil.rmtree(dir)
-                utils.ok("Done")
-            else:
-                utils.ok("Do nothing")
-                continue
+                answ = utils.query_yes_no(f"{plugin_name} already installed, delete dir and clone repo?", "yes")
+                if answ:
+                    utils.info(f"Remove {dir} directory...")
+                    shutil.rmtree(dir)
+                    utils.ok("Done")
+                else:
+                    utils.ok("Do nothing")
+                    continue
         
             utils.info(f"Clone {plugin_name} repo...")
 
