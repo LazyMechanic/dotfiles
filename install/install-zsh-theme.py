@@ -126,10 +126,10 @@ class App:
         utils.ok("Done")
 
     def _install_zsh_conf(self):
-        utils.info("Install zsh configs files...")
-        utils.copy_file_if_exists(os.path.join(Config.ZSH_DIR, ".zshrc"), os.path.join(Config.DST_DIR, ".zshrc.back"))
-        utils.copy_file_if_exists(os.path.join(Config.ZSH_DIR, ".zshenv"), os.path.join(Config.DST_DIR, ".zshenv.back"))
-        utils.copy_file_if_exists(os.path.join(Config.ZSH_DIR, ".zshalias"), os.path.join(Config.DST_DIR, ".zshalias.back"))
+        utils.info("Install zsh config files...")
+        utils.copy_file_if_exists(os.path.join(Config.ZSH_DIR, ".zshrc"), os.path.join(Config.DST_DIR, ".zshrc"))
+        utils.copy_file_if_exists(os.path.join(Config.ZSH_DIR, ".zshenv"), os.path.join(Config.DST_DIR, ".zshenv"))
+        utils.copy_file_if_exists(os.path.join(Config.ZSH_DIR, ".zshalias"), os.path.join(Config.DST_DIR, ".zshalias"))
         utils.ok("Done")
 
     def _setup_theme(self):
