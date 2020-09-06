@@ -1,3 +1,27 @@
+
+## How to install 
+ **via curl**
+ ```bash
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/LazyMechanic/dotfiles/master/scripts/install.sh) ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}"
+ ```
+
+**via wget** 
+```bash
+bash -c "$(wget -O- https://raw.githubusercontent.com/LazyMechanic/dotfiles/master/scripts/install.sh) ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}" 
+```
+
+## Zsh themes
+### LazyMechanic
+![LazyMechanic](./docs/lazymechanic.png)
+### Powerlevel10k (lean)
+![Powerlevel10k_lean](./docs/p10k.lean.png)
+### Powerlevel10k (classic)
+![Powerlevel10k_classic](./docs/p10k.classic.png)
+### Powerlevel10k (rainbow)
+![Powerlevel10k_rainbow](./docs/p10k.rainbow.png)
+### Default
+![Default](./docs/default.png)
+
 ## Dependencies
 
 ### Zsh prompt
@@ -42,27 +66,3 @@
 | python 3+       | ✓        | Just python v3.0+                                                       | 
 | arandr          | ✖        | Provides a simple visual front end for XRandR                           | 
 | (Icons) Tela    | ✖        | Pretty icons                                                            | 
-
-
-## How to install 
- **via curl**
- ```bash
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/LazyMechanic/dotfiles/master/install/install.sh) ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}"
- ```
-
-**via wget** 
-```bash
-bash -c "$(wget -O- https://raw.githubusercontent.com/LazyMechanic/dotfiles/master/install/install.sh) ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}" 
-```
-
-## Zsh themes
-### LazyMechanic
-![LazyMechanic](./docs/lazymechanic.png)
-### Powerlevel10k (lean)
-![Powerlevel10k_lean](./docs/p10k.lean.png)
-### Powerlevel10k (classic)
-![Powerlevel10k_classic](./docs/p10k.classic.png)
-### Powerlevel10k (rainbow)
-![Powerlevel10k_rainbow](./docs/p10k.rainbow.png)
-### Default
-![Default](./docs/default.png)

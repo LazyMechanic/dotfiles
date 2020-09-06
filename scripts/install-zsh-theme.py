@@ -11,6 +11,8 @@ import os
 
 ###################### Application ######################
 
+_cur_dir = os.path.dirname(os.path.realpath(__file__))
+
 class Theme(enum.Enum):
     default = "default"
     p10k_lean = "p10klean"
@@ -24,7 +26,7 @@ class Theme(enum.Enum):
 class Config:
     DEFAULT_THEME = "robbyrussell"
     DST_DIR = os.path.expanduser("~")
-    ZSH_DIR = os.path.join(os.path.dirname(os.path.realpath(__file__)), "zsh")
+    ZSH_DIR = os.path.join(_cur_dir, "zsh")
 
     def __init__(self):
         self.theme = ""
