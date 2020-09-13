@@ -107,8 +107,8 @@ _LOCAL_REPO="lazymechanic.configs"
 _ZSH_CUSTOM=""
 _FONTS_DIR="$_LOCAL_REPO/fonts"
 
-_INSTALL_ZSH_THEME_SCRIPT="$_LOCAL_REPO/install/install-zsh-theme.py"
-_INSTALL_DOTFILES_SCRIPT="$_LOCAL_REPO/install/install-dotfiles.py"
+_INSTALL_ZSH_THEME_SCRIPT="$_LOCAL_REPO/scripts/install-zsh-theme.py"
+_INSTALL_DOTFILES_SCRIPT="$_LOCAL_REPO/scripts/install-dotfiles.py"
 
 ######################## VARIABLES END ########################
 
