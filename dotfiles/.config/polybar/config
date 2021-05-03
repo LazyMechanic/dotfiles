@@ -139,7 +139,7 @@ tray-maxsize = 16
 ; ### Enable pseudo transparency
 ; ### Will automatically be enabled if a fully transparent
 ; ### background color is defined using `tray-background`
-tray-transparent = false
+;tray-transparent = false
 
 ; ### Background color for the tray container 
 ; ### ARGB color (e.g. #f00, #ff992a, #ddff1023)
@@ -520,14 +520,14 @@ format-padding = ${offsets.mpadding}
 
 [module/popup-calendar]
 type = custom/script
-exec = $HOME/.config/polybar/scripts/popup-calendar.sh
+exec = $HOME/.local/bin/i3-polybar-popup-calendar.sh
 interval = 5
 
 format-background = ${colors.date-background}
 format-foreground = ${colors.date-foreground}
 format-padding = ${offsets.mpadding}
 
-click-left = $HOME/.config/polybar/scripts/popup-calendar.sh --popup &
+click-left = $HOME/.local/bin/i3-polybar-popup-calendar.sh --popup &
 
 ; ##########################################
 ; ################## date ##################
@@ -539,7 +539,7 @@ type = internal/date
 ; ### Date example: Mon | 01.02.2020
 date = " %a | %d.%m.%Y"
 
-;format = "%{A1:$HOME/.config/polybar/scripts/popup-calendar.sh --popup &:}<date>%{A}"
+;format = "%{A1:$HOME/.local/bin/i3-polybar-popup-calendar.sh --popup &:}<date>%{A}"
 format-background = ${colors.date-background}
 format-foreground = ${colors.date-foreground}
 format-padding = ${offsets.mpadding}
@@ -615,7 +615,7 @@ bar-volume-empty-foreground = #1d2021
 [module/powermenu]
 type = custom/menu
 
-expand-right = true
+expand-right = false
 
 format-spacing = 1
 format-background = ${colors.powermenu-background}

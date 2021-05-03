@@ -51,6 +51,7 @@ bash -c "$(wget -O- https://raw.githubusercontent.com/LazyMechanic/dotfiles/mast
 | xss-lock                                                            | ✓        | Use external locker as X screen saver                                                                   |
 | xbacklight                                                          | ✖        | Adjust backlight brightness using RandR extension                                                       |
 | yad                                                                 | ✓        | Program allows you to display GTK+ dialog boxes from command line or shell scripts. Needs for calendar  |
+| xdotool                                                             | ✓        | Command-line X11 automation tool. Needs for calendar position                                           |
 | [xkb-switch-i3](https://github.com/zebradil/xkb-switch-i3)          | ✓        | This i3-flavored version of xkb-switch is capable of switching layout groups automatically in i3wm      |
 | (Font) Noto Sans Mono                                               | ✓        | Main font in polybar                                                                                    |
 | (Font) Awesome Pro Solid                                            | ✓        | Font for icons                                                                                          |

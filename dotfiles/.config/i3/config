@@ -184,27 +184,34 @@ bindsym XF86AudioPause exec --no-startup-id playerctl play-pause
 bindsym XF86AudioNext  exec --no-startup-id playerctl next
 bindsym XF86AudioPrev  exec --no-startup-id playerctl previous
 
+# Screen brightness controls
+bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 10;
+bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 10;
+
 ### Take screenshot
 bindsym $mod+Shift+S exec --no-startup-id flameshot gui
 
 ### Lock screen
-bindsym $mod+Escape exec --no-startup-id $HOME/.local/bin/lock.sh
 bindsym $mod+Shift+Escape exec --no-startup-id systemctl suspend
 
 ### Program launcher
-bindsym $mod+Shift+d exec --no-startup-id dmenu_run -fn "Noto Sans 10px"
-bindsym $mod+d exec --no-startup-id $HOME/.local/bin/rofi.sh
-
-# Screen brightness controls
-bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 10;
-bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 10;
+bindsym $mod+Shift+d exec --no-startup-id dmenu_run -fn "Noto Sans 12px"
+bindsym $mod+d exec --no-startup-id rofi          \
+                                    -lines 12     \
+                                    -padding 18   \
+                                    -width 30     \
+                                    -location 0   \
+                                    -show drun    \
+                                    -sidebar-mode \
+                                    -columns 2    \
+                                    -font 'Noto Sans 12px'
 
 ###################################################################
 ########################## USER EXEC ##############################
 ###################################################################
 
 ### Init workspace
-exec --no-startup-id $HOME/.config/i3/init_workspace.sh
+exec --no-startup-id $HOME/.local/bin/i3-init-workspace.sh
 
 ### Start messengers
 exec --no-startup-id vk-messenger
@@ -220,14 +227,8 @@ exec --no-startup-id nm-applet
 ### Start blueman
 exec --no-startup-id blueman-applet
 
-### Start KDE connect
-exec --no-startup-id kdeconnect-indicator
-
 ### Notification daemon
 exec --no-startup-id dunst
-
-### Lock after wake up
-exec --no-startup-id xss-lock -l -- $HOME/.local/bin/lock.sh
 
 ###################################################################
 ###################### USER EXEC_ALWAYS ###########################
@@ -240,20 +241,20 @@ exec_always --no-startup-id autorandr --change --force
 exec_always --no-startup-id setxkbmap -model pc104 -layout us,ru -option grp:alt_shift_toggle
 
 ### Setup wallpaper
-exec_always --no-startup-id feh --bg-fill $HOME/.config/wallpapers/wallpaper_23.png \
-				--bg-fill $HOME/.config/wallpapers/wallpaper_23.png
+exec_always --no-startup-id $HOME/.local/bin/i3-random-wallpaper.sh
 
 ### Start compositor
-exec_always --no-startup-id $HOME/.config/i3/picom.sh
-
-### Start spotify controls listener
-exec_always --no-startup-id $HOME/.config/polybar/scripts/spotify/launch-spotify-controls.sh
+#exec_always --no-startup-id picom                                   \
+#                            --config $HOME/.config/picom/picom.conf \
+#                            --experimental-backends                 \
+#                            --backend glx                           \
+#                            --xrender-sync-fence
 
 ### Enable change keyboard layout by window
 exec_always --no-startup-id xkb-switch --i3
 
 ### Bar
-exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+exec_always --no-startup-id $HOME/.local/bin/i3-start-polybar.sh
 # bar {}
 
 ###################################################################
