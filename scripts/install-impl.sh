@@ -205,6 +205,13 @@ install_fonts() {
 }
 
 install_dotfiles() {
+    info "Copy dotfiles"
+    local_dfiles_dir="$HOME"       
+    cp -r "$_DOTFILES_DIR/." "$local_dfiles_dir/"
+    ok "Done!"
+}
+
+install_dependencies() {
     info "Install dependencies"
 
     sudo bash -c 'pacman -Syu'
@@ -226,7 +233,13 @@ install_dotfiles() {
         playerctl                   \
         lxappearance-gtk3           \
         i3-gaps                     \
-        xorg-xbacklight
+        xorg-xbacklight             \
+        kitty                       \
+        spotify                     \
+        discord                     \
+        vk-messenger                \
+        telegram-desktop            \
+        jetbrains-toolbox
 
     ok "Done!"
 
@@ -247,11 +260,6 @@ install_dotfiles() {
     fi
     ok "Done!"
 
-    info "Copy dotfiles"
-    local_dfiles_dir="$HOME"       
-    cp -r "$_DOTFILES_DIR/." "$local_dfiles_dir/"
-    ok "Done!"
-
     info "Change shell"
     chsh -s $(which zsh)
     ok "Done!"
@@ -261,7 +269,7 @@ install_dotfiles() {
 
 select_action() {
     PS3='Please enter action: '
-    options=("Install zsh theme" "Install fonts" "Install dotfiles (also install theme and fonts)" "Exit")
+    options=("Install zsh theme" "Install fonts" "Install dotfiles" "Install dependencies" "Full installation (dependencies, dotfiles, fonts, zsh theme)" "Exit")
     select opt in "${options[@]}"
     do
         case $opt in
@@ -273,8 +281,16 @@ select_action() {
                 echo "fonts"
                 return
                 ;;
-            "Install dotfiles (also install theme and fonts)")
+            "Install dotfiles")
                 echo "dotfiles"
+                return
+                ;;
+            "Install dependencies")
+                echo "dependencies"
+                return
+                ;;
+            "Full installation (dependencies, dotfiles, fonts, zsh theme)")
+                echo "full"
                 return
                 ;;
             "Exit")
@@ -299,6 +315,15 @@ main_loop() {
                 ;;
             "dotfiles")
                 install_dotfiles
+                return
+                ;;
+            "dependencies")
+                install_dependencies
+                return
+                ;;
+            "full")
+                install_dotfiles
+                install_dependencies
                 install_fonts
                 install_zsh_theme
                 return
