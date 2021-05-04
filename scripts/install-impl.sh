@@ -223,8 +223,7 @@ install_dotfiles() {
         playerctl                   \
         lxappearance-gtk3           \
         i3-gaps                     \
-        xorg-xbacklight             \
-        zsh-autosuggestions
+        xorg-xbacklight
 
     ok "Done!"
     
