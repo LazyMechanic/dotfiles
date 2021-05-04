@@ -240,7 +240,8 @@ install_fonts() {
 install_dotfiles() {
     info "Install dependencies"
     pacman -Syu                     \
-        && pacman -S                \
+        && pacman -S yay            \
+        && yay -S                   \
         zsh                         \
         bat                         \
         exa                         \
