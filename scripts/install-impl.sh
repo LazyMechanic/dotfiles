@@ -300,6 +300,7 @@ main_loop() {
                 install_dotfiles
                 install_fonts
                 install_zsh_theme
+                return
                 ;;
             "exit")
                 return
