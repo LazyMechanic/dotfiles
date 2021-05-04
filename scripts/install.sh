@@ -222,7 +222,7 @@ install_fonts() {
             echo " - $f"
         done
         
-        cp "$_FONTS_DIR/*" "$local_fonts_dir/"
+        cp "$_FONTS_DIR/." "$local_fonts_dir/"
 
         ok "Done!"
     else
@@ -260,9 +260,8 @@ install_dotfiles() {
 
     info "Copy dotfiles"
 
-    local_dfiles_dir="$HOME"
-    dfiles=$(ls "$_DOTFILES_DIR")        
-    cp -r "$_DOTFILES_DIR/*" "$local_dfiles_dir/"
+    local_dfiles_dir="$HOME"       
+    cp -r "$_DOTFILES_DIR/." "$local_dfiles_dir/"
 
     ok "Done!"
 
