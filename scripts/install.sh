@@ -123,8 +123,8 @@ clone_project() {
             ok "Done!"
         else
             info "Try git pull repo..."
-            
-            old_dir = $(pwd)
+
+            old_dir=$(pwd)
             cd "$_LOCAL_REPO"
             git pull
             if [[ ! $? -eq 0 ]];
