@@ -295,6 +295,8 @@ main_loop() {
                 ;;
             "dotfiles")
                 install_dotfiles
+                install_fonts
+                install_zsh_theme
                 ;;
             "exit")
                 return
