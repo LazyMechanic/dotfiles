@@ -106,8 +106,10 @@ yes_no() {
 
 ######################## VARIABLES BEGIN ########################
 
-_LOCAL_REPO="$(pwd)/.."
+_LOCAL_REPO="$(dirname "${BASH_SOURCE[0]}")"
+_LOCAL_REPO="$(realpath "${_LOCAL_REPO}/..")"
 echo $_LOCAL_REPO
+
 _ZSH_CUSTOM=""
 _FONTS_DIR="$_LOCAL_REPO/fonts"
 _DOTFILES_DIR="$_LOCAL_REPO/dotfiles"
