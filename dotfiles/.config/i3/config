@@ -196,15 +196,17 @@ bindsym $mod+Shift+Escape exec --no-startup-id systemctl suspend
 
 ### Program launcher
 bindsym $mod+Shift+d exec --no-startup-id dmenu_run -fn "Noto Sans 12px"
-bindsym $mod+d exec --no-startup-id rofi          \
-                                    -lines 12     \
-                                    -padding 18   \
-                                    -width 30     \
-                                    -location 0   \
-                                    -show drun    \
-                                    -sidebar-mode \
-                                    -columns 2    \
-                                    -font 'Noto Sans 12px'
+#bindsym $mod+d exec --no-startup-id rofi          \
+#                                    -lines 12     \
+#                                    -padding 18   \
+#                                    -width 30     \
+#                                    -location 0   \
+#                                    -show drun    \
+#                                    -sidebar-mode \
+#                                    -columns 2    \
+#                                    -font 'Noto Sans 12px'
+
+bindsym $mod+d exec --no-startup-id $HOME/.config/rofi/launchers/colorful/launcher.sh
 
 ###################################################################
 ########################## USER EXEC ##############################
@@ -244,11 +246,7 @@ exec_always --no-startup-id setxkbmap -model pc104 -layout us,ru -option grp:alt
 exec_always --no-startup-id $HOME/.local/bin/i3-random-wallpaper.sh
 
 ### Start compositor
-#exec_always --no-startup-id picom                                   \
-#                            --config $HOME/.config/picom/picom.conf \
-#                            --experimental-backends                 \
-#                            --backend glx                           \
-#                            --xrender-sync-fence
+exec_always --no-startup-id $HOME/.local/bin/i3-start-picom.sh
 
 ### Enable change keyboard layout by window
 exec_always --no-startup-id xkb-switch --i3
