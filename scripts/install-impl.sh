@@ -107,6 +107,7 @@ yes_no() {
 ######################## VARIABLES BEGIN ########################
 
 _LOCAL_REPO="$(pwd)/.."
+echo $_LOCAL_REPO
 _ZSH_CUSTOM=""
 _FONTS_DIR="$_LOCAL_REPO/fonts"
 _DOTFILES_DIR="$_LOCAL_REPO/dotfiles"
