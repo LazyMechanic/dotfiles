@@ -186,12 +186,13 @@ install_fonts() {
         local_fonts_dir="$HOME/.local/share/fonts"
         mkdir -p "$local_fonts_dir"
         
-        fonts=$(ls "$_FONTS_DIR")
         info "Font files to be installed:"
-        for f in $fonts
+        for entry in "$_FONTS_DIR"/*
         do
             echo " - $f"
         done
+
+        info "Destination directory: $local_fonts_dir"
         
         info "Install fonts"
         cp -r "$_FONTS_DIR/." "$local_fonts_dir/"
