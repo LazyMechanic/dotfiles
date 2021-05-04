@@ -269,7 +269,7 @@ select_action() {
                 echo "fonts"
                 return
                 ;;
-            "Install dotfiles")
+            "Install dotfiles (also install theme and fonts)")
                 echo "dotfiles"
                 return
                 ;;
