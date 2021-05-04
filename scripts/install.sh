@@ -222,7 +222,13 @@ install_fonts() {
             echo " - $f"
         done
         
-        cp "$_FONTS_DIR/." "$local_fonts_dir/"
+        info "Install fonts"
+        cp -r "$_FONTS_DIR/." "$local_fonts_dir/"
+        if [[ ! $? -eq 0 ]];
+        then
+            error "Failed"
+            return
+        fi
 
         ok "Done!"
     else
@@ -233,8 +239,8 @@ install_fonts() {
 
 install_dotfiles() {
     info "Install dependencies"
-    pacman -Syu
-    pacman -S                       \
+    pacman -Syu                     \
+        && pacman -S                \
         zsh                         \
         bat                         \
         exa                         \
@@ -252,17 +258,31 @@ install_dotfiles() {
         aur/i3-gaps-next-git        \
         extra/xorg-xbacklight       \
         aur/zsh-autosuggestions-git
+    if [[ ! $? -eq 0 ]];
+    then
+        error "Failed"
+        return
+    fi
     ok "Done!"
 
     info "Install oh-my-zsh"
-    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" --unattended
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+    if [[ ! $? -eq 0 ]];
+    then
+        error "Failed"
+        return
+    fi
     ok "Done!"
 
     info "Copy dotfiles"
 
     local_dfiles_dir="$HOME"       
     cp -r "$_DOTFILES_DIR/." "$local_dfiles_dir/"
-
+    if [[ ! $? -eq 0 ]];
+    then
+        error "Failed"
+        return
+    fi
     ok "Done!"
 
     info "Don\'t forget to change shell by \'chsh -s $(which zsh)\'"
