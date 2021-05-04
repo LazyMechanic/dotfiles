@@ -235,7 +235,7 @@ install_dotfiles() {
         if [ "$answer" == "y" ];
         then
             info "Uninstall oh-my-zsh"
-            uninstall_oh_my_zsh
+            env ZSH="$ZSH" sh "$ZSH/tools/uninstall.sh"
             ok "Done!"
         fi
     fi
