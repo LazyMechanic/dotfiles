@@ -249,7 +249,9 @@ install_dotfiles() {
     cp -r "$_DOTFILES_DIR/." "$local_dfiles_dir/"
     ok "Done!"
 
-    info "Don't forget to change shell by 'chsh -s $(which zsh)'"
+    info "Change shell"
+    chsh -s $(which zsh)
+    ok "Done!"
 
     return
 }

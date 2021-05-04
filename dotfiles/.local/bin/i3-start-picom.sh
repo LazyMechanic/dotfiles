@@ -6,4 +6,7 @@ if ps -A | grep picom; then
 fi
 
 # Load picom
-picom --experimental-backends --backend glx
+picom   --config $HOME/.config/picom/picom.conf #\
+#	--experimental-backends                 \
+#	--backend glx                           \
+#	--xrender-sync-fence
