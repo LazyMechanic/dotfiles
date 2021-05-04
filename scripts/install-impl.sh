@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 ######################## UTILS BEGIN ########################
 
 setup_color() {
