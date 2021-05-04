@@ -229,7 +229,8 @@ install_dotfiles() {
         xorg-xbacklight
 
     ok "Done!"
-    
+
+    info "Install oh-my-zsh"
     # If oh-my-zsh already exists
     if [ -d "$ZSH" ];
     then
@@ -238,12 +239,12 @@ install_dotfiles() {
         then
             info "Uninstall oh-my-zsh"
             env ZSH="$ZSH" sh "$ZSH/tools/uninstall.sh"
+            sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
             ok "Done!"
         fi
+    else
+        sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
     fi
-
-    info "Install oh-my-zsh"
-    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
     ok "Done!"
 
     info "Copy dotfiles"
