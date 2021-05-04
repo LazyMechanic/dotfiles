@@ -26,8 +26,18 @@ ex ()
 export EDITOR=nano
 alias zshrc='${=EDITOR} ~/.zshrc' # Quick access to the ~/.zshrc file
 
+if command -v exa &> /dev/null
+then
+    alias ls='exa'
+fi
+
 alias ls='ls -hF --color=auto'
 alias lal='ls -la --color=auto'
 alias la='ls -a --color=auto'
 alias ll='ls -l --color=auto'
 alias ldot='ls -ld .* --color=auto'
+
+if command -v bat &> /dev/null
+then
+    alias cat='bat'
+fi

@@ -106,9 +106,9 @@ _REMOTE_REPO="https://github.com/LazyMechanic/configs.git"
 _LOCAL_REPO="lazymechanic.configs"
 _ZSH_CUSTOM=""
 _FONTS_DIR="$_LOCAL_REPO/fonts"
+_DOTFILES_DIR="$_LOCAL_REPO/dotfiles"
 
 _INSTALL_ZSH_THEME_SCRIPT="$_LOCAL_REPO/scripts/install-zsh-theme.py"
-_INSTALL_DOTFILES_SCRIPT="$_LOCAL_REPO/scripts/install-dotfiles.py"
 
 ######################## VARIABLES END ########################
 
@@ -136,7 +136,7 @@ clone_project() {
         then
             info "Remove '$_LOCAL_REPO' directory..."
             rm -rf "$_LOCAL_REPO"
-            ok "Directory removed"
+            ok "Done!"
         else
             ok "Do nothing"
             return
@@ -153,7 +153,7 @@ clone_project() {
         exit 1
     fi
     
-    ok "Project cloned"
+    ok "Done!"
 }
 
 select_theme() {
@@ -201,7 +201,7 @@ install_zsh_theme() {
         exit 1
     fi
     
-    ok "Zsh theme installed"
+    ok "Done!"
     info "Start zsh session and call 'source ~/.zshrc'"
 }
 
@@ -222,11 +222,9 @@ install_fonts() {
             echo " - $f"
         done
         
-        for f in $fonts
-        do
-            cp "$_FONTS_DIR/$f" "$local_fonts_dir/$f"
-        done
-        ok "Fonts installed"
+        cp "$_FONTS_DIR/*" "$local_fonts_dir/"
+
+        ok "Done!"
     else
         ok "Do nothing"
         return
@@ -234,6 +232,42 @@ install_fonts() {
 }
 
 install_dotfiles() {
+    info "Install dependencies"
+    pacman -Syu
+    pacman -S                       \
+        zsh                         \
+        bat                         \
+        exa                         \
+        feh                         \
+        yad                         \
+        rofi                        \
+        dmenu                       \
+        dunst                       \
+        picom                       \
+        polybar                     \
+        xdotool                     \
+        autorandr                   \
+        playerctl                   \
+        lxappearance-gtk3           \
+        aur/i3-gaps-next-git        \
+        extra/xorg-xbacklight       \
+        aur/zsh-autosuggestions-git
+    ok "Done!"
+
+    info "Install oh-my-zsh"
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" --unattended
+    ok "Done!"
+
+    info "Copy dotfiles"
+
+    local_dfiles_dir="$HOME"
+    dfiles=$(ls "$_DOTFILES_DIR")        
+    cp -r "$_DOTFILES_DIR/*" "$local_dfiles_dir/"
+
+    ok "Done!"
+
+    info "Don\'t forget to change shell by \'chsh -s $(which zsh)\'"
+
     return
 }
 
@@ -251,7 +285,7 @@ select_action() {
                 echo "fonts"
                 return
                 ;;
-            "Install dotfiles (not working yet)")
+            "Install dotfiles")
                 echo "dotfiles"
                 return
                 ;;
@@ -276,7 +310,7 @@ main_loop() {
                 install_fonts
                 ;;
             "dotfiles")
-                install_dotfiles
+                sudo sh -c "$(declare -f install_dotfiles); install_dotfiles"
                 ;;
             "exit")
                 return
@@ -291,7 +325,7 @@ remove_project() {
     then
         info "Start remove project..."
         rm -rf "$_LOCAL_REPO"
-        ok "Project removed"
+        ok "Done!"
     else
         ok "Do nothing"
         return
@@ -306,6 +340,7 @@ main() {
     check_command sed
     check_command source
     check_command python3
+    check_command pacman
     
     # If no has argument
     if [[ $# != 1 ]];
