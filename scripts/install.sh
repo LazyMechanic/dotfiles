@@ -171,17 +171,9 @@ main() {
 
     # Check commands
     check_command git
-    
-    # If no has argument
-    if [[ $# != 1 ]];
-    then
-        error "invalid argument, 1st argument must be \$ZSH_CUSTOM"
-    fi
-
-    _ZSH_CUSTOM="$1"
 
     clone_project
-    bash -c "$_LOCAL_REPO/scripts/install-impl.sh" "" $1
+    bash -c "$_LOCAL_REPO/scripts/install-impl.sh $@"
     remove_project
 }
 
