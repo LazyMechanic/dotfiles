@@ -239,9 +239,19 @@ install_fonts() {
 
 install_dotfiles() {
     info "Install dependencies"
-    pacman -Syu                     \
-        && pacman -S yay            \
-        && yay -S                   \
+    pacman -Syu
+    if [[ ! $? -eq 0 ]];
+    then
+        error "Failed"
+        return
+    fi
+    pacman -S yay
+    if [[ ! $? -eq 0 ]];
+    then
+        error "Failed"
+        return
+    fi
+    yay -S                          \
         zsh                         \
         bat                         \
         exa                         \
