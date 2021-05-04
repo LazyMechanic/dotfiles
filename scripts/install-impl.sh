@@ -257,7 +257,7 @@ install_dotfiles() {
 
 select_action() {
     PS3='Please enter action: '
-    options=("Install zsh theme" "Install fonts" "Install dotfiles" "Exit")
+    options=("Install zsh theme" "Install fonts" "Install dotfiles (also install theme and fonts)" "Exit")
     select opt in "${options[@]}"
     do
         case $opt in
