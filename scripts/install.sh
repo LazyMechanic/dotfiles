@@ -123,12 +123,17 @@ clone_project() {
             ok "Done!"
         else
             info "Try git pull repo..."
-            git pull "$_LOCAL_REPO"
+            
+            old_dir = $(pwd)
+            cd "$_LOCAL_REPO"
+            git pull
             if [[ ! $? -eq 0 ]];
             then
                 error "Failed"
                 exit 1
             fi
+            cd "$old_dir"
+
             ok "Done!"
             return
         fi
