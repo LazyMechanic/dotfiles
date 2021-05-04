@@ -187,7 +187,7 @@ install_fonts() {
         mkdir -p "$local_fonts_dir"
         
         info "Font files to be installed:"
-        for entry in "$_FONTS_DIR"/*
+        for f in "$_FONTS_DIR"/*
         do
             echo " - $f"
         done
@@ -273,7 +273,7 @@ install_dotfiles() {
     fi
     ok "Done!"
 
-    info "Don\'t forget to change shell by \'chsh -s $(which zsh)\'"
+    info "Don't forget to change shell by 'chsh -s $(which zsh)'"
 
     return
 }
