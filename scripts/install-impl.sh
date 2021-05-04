@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 ######################## UTILS BEGIN ########################
 
 setup_color() {
@@ -165,12 +167,7 @@ install_zsh_theme() {
     python3 \
         "$_INSTALL_ZSH_THEME_SCRIPT" \
         --zsh-custom "$_ZSH_CUSTOM" \
-        "$theme" 
-    if [[ ! $? -eq 0 ]];
-    then
-        error "Install zsh theme failed"
-        exit 1
-    fi
+        "$theme"
     
     ok "Done!"
     info "Start zsh session and call 'source ~/.zshrc'"
@@ -196,11 +193,6 @@ install_fonts() {
         
         info "Install fonts"
         cp -r "$_FONTS_DIR/." "$local_fonts_dir/"
-        if [[ ! $? -eq 0 ]];
-        then
-            error "Failed"
-            return
-        fi
 
         ok "Done!"
     else
@@ -212,20 +204,8 @@ install_fonts() {
 install_dotfiles() {
     info "Install dependencies"
 
-    sudo sh -c 'pacman -Syu'
-    if [[ ! $? -eq 0 ]];
-    then
-        error "Failed"
-        return
-    fi
-
-    sudo sh -c 'pacman -S yay'
-    if [[ ! $? -eq 0 ]];
-    then
-        error "Failed"
-        return
-    fi
-
+    sudo bash -c 'pacman -Syu'
+    sudo bash -c 'pacman -S yay'
     yay -S                          \
         base-devel                  \
         zsh                         \
@@ -245,32 +225,28 @@ install_dotfiles() {
         i3-gaps                     \
         xorg-xbacklight             \
         zsh-autosuggestions
-    if [[ ! $? -eq 0 ]];
-    then
-        error "Failed"
-        return
-    fi
 
     ok "Done!"
+    
+    # If oh-my-zsh already exists
+    if [ -d "$ZSH" ];
+    then
+        answer=$(yes_no "Oh my zsh already exists. Reinstall it?" "y")
+        if [ "$answer" == "y" ];
+        then
+            info "Uninstall oh-my-zsh"
+            uninstall_oh_my_zsh
+            ok "Done!"
+        fi
+    fi
 
     info "Install oh-my-zsh"
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
-    if [[ ! $? -eq 0 ]];
-    then
-        error "Failed"
-        return
-    fi
     ok "Done!"
 
     info "Copy dotfiles"
-
     local_dfiles_dir="$HOME"       
     cp -r "$_DOTFILES_DIR/." "$local_dfiles_dir/"
-    if [[ ! $? -eq 0 ]];
-    then
-        error "Failed"
-        return
-    fi
     ok "Done!"
 
     info "Don't forget to change shell by 'chsh -s $(which zsh)'"

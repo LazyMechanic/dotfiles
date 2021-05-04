@@ -122,7 +122,14 @@ clone_project() {
             rm -rf "$_LOCAL_REPO"
             ok "Done!"
         else
-            ok "Do nothing"
+            info "Try git pull repo..."
+            git pull "$_LOCAL_REPO"
+            if [[ ! $? -eq 0 ]];
+            then
+                error "Failed"
+                exit 1
+            fi
+            ok "Done!"
             return
         fi
     fi
