@@ -216,9 +216,9 @@ bindsym $mod+d exec --no-startup-id $HOME/.config/rofi/launchers/colorful/launch
 exec --no-startup-id $HOME/.local/bin/i3-init-workspace.sh
 
 ### Start messengers
-exec --no-startup-id vk-messenger
+exec --no-startup-id vk
 exec --no-startup-id telegram-desktop
-exec --no-startup-id discord-canary
+exec --no-startup-id discord
 
 ### Start spotify
 exec --no-startup-id spotify
