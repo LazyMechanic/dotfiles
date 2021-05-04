@@ -126,36 +126,6 @@ check_oh_my_zsh() {
     # fi
 }
 
-clone_project() {
-    info "Start clone project..."
-    
-    if [[ -d "$_LOCAL_REPO" ]];
-    then
-        answer=$(yes_no "'$_LOCAL_REPO' already exists, remove dir and clone again?" "y")
-        if [ "$answer" == "y" ];
-        then
-            info "Remove '$_LOCAL_REPO' directory..."
-            rm -rf "$_LOCAL_REPO"
-            ok "Done!"
-        else
-            ok "Do nothing"
-            return
-        fi
-    fi
-    
-    git clone \
-        -c core.eol=lf \
-        -c core.autocrlf=false \
-        "$_REMOTE_REPO" "$_LOCAL_REPO" 
-    if [[ ! $? -eq 0 ]];
-    then
-        error "git clone of '$_REMOTE_REPO' repo failed"
-        exit 1
-    fi
-    
-    ok "Done!"
-}
-
 select_theme() {
     PS3='Please enter theme: '
     options=("LazyMechanic" "Powerlevel10k (lean)" "Powerlevel10k (classic)" "Powerlevel10k (rainbow)" "Default (robbyrussell)")
@@ -270,9 +240,9 @@ install_dotfiles() {
         autorandr                   \
         playerctl                   \
         lxappearance-gtk3           \
-        aur/i3-gaps-next-git        \
-        extra/xorg-xbacklight       \
-        aur/zsh-autosuggestions-git
+        i3-gaps                     \
+        xorg-xbacklight             \
+        zsh-autosuggestions
     if [[ ! $? -eq 0 ]];
     then
         error "Failed"
@@ -354,19 +324,6 @@ main_loop() {
     done
 }
 
-remove_project() {
-    answer=$(yes_no "Remove cloning project?" "y")
-    if [ "$answer" == "y" ];
-    then
-        info "Start remove project..."
-        rm -rf "$_LOCAL_REPO"
-        ok "Done!"
-    else
-        ok "Do nothing"
-        return
-    fi
-}
-
 main() {
     setup_color
 
@@ -388,9 +345,7 @@ main() {
     # Check if zsh custom dir exists
     check_oh_my_zsh
 
-    clone_project
     main_loop
-    remove_project
 }
 
 main $@
