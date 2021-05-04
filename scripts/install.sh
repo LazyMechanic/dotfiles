@@ -239,18 +239,21 @@ install_fonts() {
 
 install_dotfiles() {
     info "Install dependencies"
-    pacman -Syu
+
+    sudo sh -c 'pacman -Syu'
     if [[ ! $? -eq 0 ]];
     then
         error "Failed"
         return
     fi
-    pacman -S yay
+
+    sudo sh -c 'pacman -S yay'
     if [[ ! $? -eq 0 ]];
     then
         error "Failed"
         return
     fi
+
     yay -S                          \
         zsh                         \
         bat                         \
@@ -274,6 +277,7 @@ install_dotfiles() {
         error "Failed"
         return
     fi
+
     ok "Done!"
 
     info "Install oh-my-zsh"
@@ -340,7 +344,7 @@ main_loop() {
                 install_fonts
                 ;;
             "dotfiles")
-                sudo sh -c "$(declare -f install_dotfiles); install_dotfiles"
+                install_dotfiles
                 ;;
             "exit")
                 return
