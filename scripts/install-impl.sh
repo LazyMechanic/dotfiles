@@ -233,7 +233,6 @@ install_dependencies() {
         playerctl                   \
         lxappearance-gtk3           \
         i3-gaps                     \
-        xorg-xbacklight             \
         kitty                       \
         spotify                     \
         discord                     \

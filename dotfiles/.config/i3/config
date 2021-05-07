@@ -185,8 +185,9 @@ bindsym XF86AudioNext  exec --no-startup-id playerctl next
 bindsym XF86AudioPrev  exec --no-startup-id playerctl previous
 
 # Screen brightness controls
-bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 10;
-bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 10;
+bindsym XF86MonBrightnessUp exec --no-startup-id $HOME/.local/bin/i3-brightness.sh Up
+bindsym XF86MonBrightnessDown exec --no-startup-id $HOME/.local/bin/i3-brightness.sh Down
+
 
 ### Take screenshot
 bindsym $mod+Shift+S exec --no-startup-id flameshot gui
