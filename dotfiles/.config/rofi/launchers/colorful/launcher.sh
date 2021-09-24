@@ -11,7 +11,7 @@
 # style_1     style_2     style_3     style_4     style_5     style_6
 # style_7     style_8     style_9     style_10    style_11    style_12
 
-theme="style_1"
+theme="style_lazymech.rasi" # style_5
 dir="$HOME/.config/rofi/launchers/colorful"
 
 # dark
@@ -23,13 +23,13 @@ dir="$HOME/.config/rofi/launchers/colorful"
 ALPHA="#00000000"
 BG="#30343Fff"
 FG="#E5EAF0ff"
-SELECT="#81a1c1ff"
+SELECT="#51586aff"
 
 # light
 #ALPHA="#00000000"
-#BG="#FFFFFFff"
-#FG="#000000ff"
-#SELECT="#f3f3f3ff"
+#BG="#E5EAF0ff"
+#FG="#30343Fff"
+#SELECT="#88D0BAff"
 
 # accent colors
 COLORS=('#EC7875' '#61C766' '#FDD835' '#42A5F5' '#BA68C8' '#4DD0E1' '#00B19F' \
@@ -50,7 +50,7 @@ cat > $dir/colors.rasi <<- EOF
 EOF
 
 # comment these lines to disable random style
-themes=($(ls -p --hide="launcher.sh" --hide="colors.rasi" $dir))
-theme="style_5" #"${themes[$(( $RANDOM % 12 ))]}"
+#themes=($(ls -p --hide="launcher.sh" --hide="colors.rasi" $dir))
+#theme="style_5" #"${themes[$(( $RANDOM % 12 ))]}"
 
 rofi -no-lazy-grab -show drun -modi drun -theme $dir/"$theme" -font "Noto Sans Mono 15px"
